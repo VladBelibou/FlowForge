@@ -63,3 +63,25 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 ### 3. **Intelligente Anpassungen** 
 - Bei Verzögerungen werden automatisch neue Zeitpläne berechnet
 - Optimierungsvorschläge basieren auf echten Produktionsdaten
+
+##  🚀 Getting Started
+
+# Clone the repository
+```bash
+git clone https://github.com/VladBelibou/FlowForge.git
+```
+
+# Install dependencies
+```bash
+cd FlowForge
+npm install
+```
+
+# Start the application
+```bash
+npm start
+```
+
+##  📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
