@@ -46,8 +46,7 @@ In der Produktion müssen täglich mehrere Entscheidungen getroffen werden:
 - Reaktion auf Maschinenausfälle
 - Optimierung von Durchlaufzeiten
 
-Normalerweise erfordert die Anpassung von Produktionsplänen technisches Know-how und viel Zeit. 
-Mit FlowForge lässt sich einfach in normaler Sprache eingeben, was benötigt wird.
+Normalerweise erfordert die Anpassung von Produktionsplänen technisches Know-how und viel Zeit. Mit FlowForge lässt sich einfach in normaler Sprache eingeben, was benötigt wird.
 
 ## ⚡ Die wichtigsten Funktionen
 
