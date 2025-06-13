@@ -66,18 +66,18 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 
 ##  🚀 Getting Started
 
-### Clone the repository
+### 1. Clone the repository
 ```bash
 git clone https://github.com/VladBelibou/FlowForge.git
 ```
 
-### Install dependencies
+### 2. Install dependencies
 ```bash
 cd FlowForge
 npm install
 ```
 
-### Start the application
+### 3. Start the application
 ```bash
 npm start
 ```
