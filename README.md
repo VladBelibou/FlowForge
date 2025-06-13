@@ -64,24 +64,24 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 - Bei Verzögerungen werden automatisch neue Zeitpläne berechnet
 - Optimierungsvorschläge basieren auf echten Produktionsdaten
 
-##  🚀 Getting Started
+##  🚀 Setup
 
-### 1. Clone the repository
+### 1. Repository klonen
 ```bash
 git clone https://github.com/VladBelibou/FlowForge.git
 ```
 
-### 2. Install dependencies
+### 2. Abhängigkeiten installieren
 ```bash
 cd FlowForge
 npm install
 ```
 
-### 3. Start the application
+### 3. Anwendung starten
 ```bash
 npm start
 ```
 
-##  📄 License
+##  📄 Lizenz
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die **LICENSE** Datei für Details.
