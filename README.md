@@ -63,3 +63,7 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 ### 3. **Intelligente Anpassungen** 
 - Bei Verzögerungen werden automatisch neue Zeitpläne berechnet
 - Optimierungsvorschläge basieren auf echten Produktionsdaten
+
+---
+
+## License: MIT
