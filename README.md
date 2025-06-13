@@ -39,7 +39,7 @@ Status: 2 von 5 Aufträgen fertig
   <img src="https://github.com/VladBelibou/FlowForge/blob/main/demo/FlowForge-Demo.gif">
 </p>
 
-##  Welches Problem löst FlowForge?
+## 💡 Welches Problem löst FlowForge?
 
 In der Produktion müssen täglich mehrere Entscheidungen getroffen werden:
 - Priorisierung von Aufträgen
@@ -49,7 +49,7 @@ In der Produktion müssen täglich mehrere Entscheidungen getroffen werden:
 Normalerweise erfordert die Anpassung von Produktionsplänen technisches Know-how und viel Zeit. 
 Mit FlowForge lässt sich einfach in normaler Sprache eingeben, was benötigt wird.
 
-##  Die wichtigsten Funktionen
+## ⚡ Die wichtigsten Funktionen
 
 ### 1. **Einfache Bedienung mit natürlicher Sprache** 
 Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
