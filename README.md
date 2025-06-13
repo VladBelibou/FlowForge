@@ -65,5 +65,3 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 - Optimierungsvorschläge basieren auf echten Produktionsdaten
 
 ---
-
-### License: MIT
