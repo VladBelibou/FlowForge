@@ -66,4 +66,4 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 
 ---
 
-## License: MIT
+### License: MIT
