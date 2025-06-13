@@ -36,7 +36,7 @@ Status: 2 von 5 Aufträgen fertig
 ```
 
 <p align="center">
-  <gif src="https://github.com/VladBelibou/FlowForge/blob/main/demo/FlowForge-Demo.gif">
+  <img src="https://github.com/VladBelibou/FlowForge/blob/main/demo/FlowForge-Demo.gif">
 </p>
 
 ##  Welches Problem löst FlowForge?
