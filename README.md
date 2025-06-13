@@ -64,4 +64,4 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 - Bei Verzögerungen werden automatisch neue Zeitpläne berechnet
 - Optimierungsvorschläge basieren auf echten Produktionsdaten
 
----
+___
