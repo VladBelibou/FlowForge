@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://github.com/Belicoding/FlowForge/blob/main/images/Light%20Mode%20Logo.png#gh-light-mode-only">
-  <img src="https://github.com/Belicoding/FlowForge/blob/main/images/Dark%20Mode%20Logo.png#gh-dark-mode-only">
+  <img src="https://github.com/VladBelibou/FlowForge/blob/main/images/Dark%20Mode%20Logo.png#gh-light-mode-only">
+  <img src="https://github.com/VladBelibou/FlowForge/blob/main/images/Dark%20Mode%20Logo.png#gh-dark-mode-only">
 </p>
 
 # FlowForge
