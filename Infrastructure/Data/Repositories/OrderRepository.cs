@@ -15,7 +15,7 @@ namespace ManufacturingScheduler.Infrastructure.Data.Repositories
         {
             var allOrders = await _mockRepository.GetAllAsync();
 
-            // Debug logging
+            // Debug-Protokollierung
             Console.WriteLine($"DEBUG: Found {allOrders.Count} total orders");
             foreach (var order in allOrders)
             {

@@ -53,11 +53,11 @@ namespace ManufacturingScheduler.Application.Services
             if (item == null)
                 throw new ArgumentException($"Schedule item {itemId} not found");
 
-            // Update the item status
+            // Elementstatus aktualisieren
             item.Status = ScheduleItemStatus.Completed;
             item.ActualEndTime = completionTime ?? DateTime.Now;
 
-            // Handle the nullable properly
+            // Nullable-Werte korrekt behandeln
             if (actualQuantity.HasValue)
             {
                 item.ActualQuantity = actualQuantity.Value;
@@ -69,13 +69,13 @@ namespace ManufacturingScheduler.Application.Services
 
             item.Notes = notes;
 
-                // Use planned quantity if actual not provided
+                // Geplante Menge verwenden, falls tatsächliche nicht angegeben
                 item.ActualQuantity = actualQuantity ?? item.PlannedQuantity;
 
             Console.WriteLine($"DEBUG SERVICE: Completing item {itemId} at {completionTime:MM/dd HH:mm}");
             Console.WriteLine($"DEBUG SERVICE: Original end time was {item.EndTime:MM/dd HH:mm}");
 
-            // Update the item status
+            // Elementstatus aktualisieren
             item.Status = ScheduleItemStatus.Completed;
             item.ActualEndTime = completionTime;
             item.ActualQuantity = actualQuantity ?? item.PlannedQuantity;
@@ -134,7 +134,7 @@ namespace ManufacturingScheduler.Application.Services
             // Update the item
             item.Status = status;
             if (actualStartTime.HasValue) item.ActualStartTime = actualStartTime;
-            // AUTO-SET to current time if not provided and status is completed
+            // AUTO-SETZEN auf aktuelle Zeit, falls nicht angegeben und Status abgeschlossen
             if (status == ScheduleItemStatus.Completed && !actualEndTime.HasValue)
             {
                 item.ActualEndTime = DateTime.Now;
@@ -189,7 +189,7 @@ namespace ManufacturingScheduler.Application.Services
 
         public async Task<ProductionSchedule> GetScheduleByIdAsync(int scheduleId)
         {
-            // Simplified version - proper ID lookup version possible
+            // Vereinfachte Version - ordnungsgemäße ID-Suche möglich
             var currentSchedule = await _scheduleRepository.GetCurrentScheduleAsync();
 
             if (currentSchedule.Id == scheduleId)

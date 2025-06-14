@@ -31,7 +31,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
                 var prompt = BuildSchedulingPrompt(request, currentSchedule);
                 var aiResponse = await CallOpenAIAsync(prompt); 
 
-                // Parse the AI response into structured data
+                // AI-Antwort in strukturierte Daten umwandeln
                 return ParseAIResponseToInterpretation(aiResponse, request);
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
             sb.AppendLine($"- Current Status: {schedule.CompletedItems} completed, {schedule.PendingItems} pending");
             sb.AppendLine();
 
-            // Group items by status for clarity
+            // Elemente nach Status gruppieren für bessere Übersicht
             var completedItems = schedule.ScheduleItems.Where(i => i.Status == ScheduleItemStatus.Completed).ToList();
             var pendingItems = schedule.ScheduleItems.Where(i => i.Status == ScheduleItemStatus.Planned).ToList();
             var inProgressItems = schedule.ScheduleItems.Where(i => i.Status == ScheduleItemStatus.InProgress).ToList();
@@ -413,7 +413,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
 
         private string AddColorToAnalysis(string analysis)
         {
-            // Color codes with \u001b instead of \033 [Which made the difference between it working and not working]
+            // Farbcodes mit \u001b statt \033 [Das war der entscheidende Unterschied für die Funktionalität]
             const string RESET = "\u001b[0m";
             const string BOLD = "\u001b[1m";
             const string RED = "\u001b[1;31m";

@@ -28,13 +28,13 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                 ScheduleItems = new List<ScheduleItem>()
             };
 
-            // DEBUG: Show what start date was requested
+            // DEBUG: Zeigt welches Startdatum angefordert wurde
             Console.WriteLine($"DEBUG SCHEDULING: Requested start date: {startDate:MM/dd HH:mm}");
 
             var actualStartTime = DateTime.Now.AddMinutes(10); // Start in 10 minutes
             Console.WriteLine($"DEBUG SCHEDULING: Using immediate start time: {actualStartTime:MM/dd HH:mm}");
 
-            // Debug machines
+            // Debug-Maschinen
             Console.WriteLine("DEBUG SCHEDULING: Available machines:");
             foreach (var machine in machines)
             {
@@ -45,7 +45,7 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                 }
             }
 
-            // Sort orders by priority (higher priority first) and due date
+            // Bestellungen nach Priorität (höhere zuerst) und Fälligkeitsdatum sortieren
             var sortedOrders = orders.OrderByDescending(o => o.CustomerPriority)
                                    .ThenBy(o => o.DueDate)
                                    .ToList();
@@ -62,7 +62,7 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
             {
                 Console.WriteLine($"\nDEBUG SCHEDULING: Processing Order {order.Id} - '{order.ProductName}'");
 
-                // Find suitable machine
+                // Passende Maschine finden
                 var suitableMachine = machines.FirstOrDefault(m =>
                     m.IsOperational &&
                     m.ProductCapabilities.Any(pc =>
@@ -77,7 +77,7 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
 
                     Console.WriteLine($"DEBUG SCHEDULING: Using capability - Setup: {capability.SetupTimeMinutes}min, Rate: {capability.ProductionRatePerHour}/hr");
 
-                    // Calculate production time
+                    // Produktionszeit berechnen
                     var setupTime = TimeSpan.FromMinutes(capability.SetupTimeMinutes);
                     var productionHours = (double)order.Quantity / capability.ProductionRatePerHour;
                     var productionTime = TimeSpan.FromHours(productionHours);

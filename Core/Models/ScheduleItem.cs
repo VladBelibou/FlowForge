@@ -11,14 +11,14 @@
         public ProductionOrder? Order { get; set; }
         public Machine? Machine { get; set; }
 
-        // Status tracking
+        // Statusverfolgung
         public ScheduleItemStatus Status { get; set; } = ScheduleItemStatus.Planned;
         public DateTime? ActualStartTime { get; set; }
         public DateTime? ActualEndTime { get; set; }
         public int ActualQuantity { get; set; }
         public string? Notes { get; set; }
 
-        // Calculated properties
+        // Berechnete Eigenschaften
         public TimeSpan PlannedDuration => EndTime - StartTime;
         public TimeSpan? ActualDuration => ActualEndTime.HasValue && ActualStartTime.HasValue
             ? ActualEndTime.Value - ActualStartTime.Value

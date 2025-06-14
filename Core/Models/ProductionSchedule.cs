@@ -8,7 +8,7 @@
         public List<ScheduleItem> ScheduleItems { get; set; } = new();
         public string? Explanation { get; set; }
 
-        // Dynamic calculated properties
+        // Dynamisch berechnete Eigenschaften
         public DateTime EstimatedStartDate => ScheduleItems.Any()
             ? ScheduleItems.Min(item => item.StartTime)
             : DateTime.Now;
@@ -35,7 +35,7 @@
                 return DateTime.Now;
             }
 
-            // Only consider non-completed items for end date calculation
+            // Nur nicht abgeschlossene Elemente für Enddatumsberechnung berücksichtigen
             var activeItems = ScheduleItems.Where(item =>
                 item.Status != ScheduleItemStatus.Completed &&
                 item.Status != ScheduleItemStatus.Cancelled).ToList();
@@ -44,7 +44,7 @@
 
             if (!activeItems.Any())
             {
-                // All items completed - end date is the latest completion time
+                // Alle Elemente abgeschlossen - Enddatum ist die späteste Fertigstellungszeit
                 var completedItems = ScheduleItems.Where(item => item.Status == ScheduleItemStatus.Completed);
                 if (completedItems.Any())
                 {
@@ -93,7 +93,7 @@
                 Console.WriteLine($"DEBUG RECALCULATE: No completed items, using current time: {earliestAvailableTime:MM/dd HH:mm}");
             }
 
-            // Simple approach: reschedule ALL pending items sequentially from the earliest available time
+            // Einfacher Ansatz: ALLE ausstehenden Elemente sequenziell ab der frühesten verfügbaren Zeit neu planen
             var currentTime = earliestAvailableTime;
 
             foreach (var item in pendingItems)
@@ -102,7 +102,7 @@
                 var originalEnd = item.EndTime;
                 var duration = originalEnd - originalStart;
 
-                // Only reschedule if we can start earlier than originally planned
+                // Nur neu planen, wenn wir früher als ursprünglich geplant starten können
                 if (currentTime < originalStart)
                 {
                     item.StartTime = currentTime;
