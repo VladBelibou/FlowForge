@@ -129,7 +129,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
             sb.AppendLine("- Wenn ein abgeschlossener Auftrag erwähnt wird, bestätige, dass er bereits fertig ist");
             sb.AppendLine();
 
-            sb.AppendLine("Antworte kurz und prägnant (max. 300 Wörter) ohne Zeilenumbrüche:");
+            sb.AppendLine("Antworte in EINEM einzigen Fließtext ohne Absätze oder Zeilenumbrüche:");
             sb.AppendLine("STATUS: [Aktueller Zustand in 3 Sätze] ANALYSE: [Hauptproblem in 3 Sätze] EMPFEHLUNG: [Lösung in 3 Sätze]");
             sb.AppendLine();
             sb.AppendLine("Verfügbare Aktionen:");
