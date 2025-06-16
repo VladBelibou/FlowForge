@@ -99,7 +99,7 @@ dotnet run
 
 ### Neuen Zeitplan erstellen
 ```bash
-curl -X POST http://localhost:5000/api/Scheduling/create -H "Content-Type: application/json" -d '{"schedulerName": "IhrName"}'
+curl -X POST http://localhost:5000/api/Scheduling/create -H "Content-Type: application/json" -d '{"schedulerName": "IhrName"}' | jq
 ```
 
 ### Aktuellen Zeitplan-Status abrufen
