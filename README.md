@@ -63,23 +63,43 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 - Bei Verzögerungen werden automatisch neue Zeitpläne berechnet
 - Optimierungsvorschläge basieren auf echten Produktionsdaten
 
-##  🚀 Setup
+##  🐧 Linux/WSL Setup
 
-### 1. Repository klonen
+### Voraussetzungen
+
+### 1. .NET 8.0 SDK installieren:
+```bash
+wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb &&
+sudo dpkg -i packages-microsoft-prod.deb &&
+rm packages-microsoft-prod.deb sudo apt update &&
+sudo apt install -y dotnet-sdk-8.0
+```
+
+### 2. jq für JSON-Formatierung installieren (optional aber empfohlen):
+```bash
+sudo apt install jq
+```
+
+### Installation & Einrichtung
+
+### 1. Repository klonen:
 ```bash
 git clone https://github.com/VladBelibou/FlowForge.git
-```
-
-### 2. Abhängigkeiten installieren
-```bash
 cd FlowForge
-npm install
 ```
 
-### 3. Anwendung starten
+### 2. API-Einstellungen konfigurieren
 ```bash
-npm start
+# appsettings.json bearbeiten und OpenAI API-Schlüssel hinzufügen
+nano appsettings.json
 ```
+
+### 3.Anwendung starten:
+```bash
+dotnet run
+```
+
+
 
 ##  📄 Lizenz
 
