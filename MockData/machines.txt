@@ -1,0 +1,97 @@
+[
+  {
+    "Id": 1,
+    "Name": "CNC Machine A",
+    "IsOperational": true,
+    "ProductCapabilities": [
+      {
+        "Id": 1,
+        "ProductName": "Automotive Part X1",
+        "SetupTimeMinutes": 45,
+        "ProductionRatePerHour": 20
+      },
+      {
+        "Id": 2,
+        "ProductName": "Heavy Machinery Part Z3",
+        "SetupTimeMinutes": 60,
+        "ProductionRatePerHour": 5
+      }
+    ],
+    "ScheduledMaintenance": [
+      {
+        "Id": 1,
+        "StartTime": "2025-08-08T02:00:00",
+        "EndTime": "2025-08-08T06:00:00",
+        "Description": "Weekly maintenance"
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "Name": "Assembly Line B",
+    "IsOperational": true,
+    "ProductCapabilities": [
+      {
+        "Id": 3,
+        "ProductName": "Electronic Component Y2",
+        "SetupTimeMinutes": 30,
+        "ProductionRatePerHour": 50
+      },
+      {
+        "Id": 4,
+        "ProductName": "Consumer Electronics Case",
+        "SetupTimeMinutes": 20,
+        "ProductionRatePerHour": 100
+      }
+    ],
+    "ScheduledMaintenance": []
+  },
+  {
+    "Id": 3,
+    "Name": "Injection Molding Machine C",
+    "IsOperational": true,
+    "ProductCapabilities": [
+      {
+        "Id": 5,
+        "ProductName": "Widget A",
+        "SetupTimeMinutes": 15,
+        "ProductionRatePerHour": 80
+      },
+      {
+        "Id": 6,
+        "ProductName": "Consumer Electronics Case",
+        "SetupTimeMinutes": 25,
+        "ProductionRatePerHour": 120
+      }
+    ],
+    "ScheduledMaintenance": [
+      {
+        "Id": 2,
+        "StartTime": "2025-08-05T01:00:00",
+        "EndTime": "2025-08-05T05:00:00",
+        "Description": "Monthly calibration"
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "Name": "3D Printer D",
+    "IsOperational": false,
+    "ProductCapabilities": [
+      {
+        "Id": 7,
+        "ProductName": "Widget A",
+        "SetupTimeMinutes": 10,
+        "ProductionRatePerHour": 5
+      }
+    ],
+    "ScheduledMaintenance": [
+      {
+        "Id": 3,
+        "StartTime": "2025-08-07T03:00:00",
+        "EndTime": "2025-08-07T07:00:00",
+        "Description": "Repair - nozzle replacement"
+      }
+    ]
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "Id": 1,
+    "ProductName": "Automotive Part X1",
+    "Quantity": 500,
+    "DueDate": "2025-08-15T17:00:00",
+    "CustomerPriority": 9,
+    "Status": 0,
+    "RequiredMaterials": []
+  },
+  {
+    "Id": 2,
+    "ProductName": "Electronic Component Y2",
+    "Quantity": 200,
+    "DueDate": "2025-08-12T12:00:00",
+    "CustomerPriority": 7,
+    "Status": 0,
+    "RequiredMaterials": []
+  },
+  {
+    "Id": 3,
+    "ProductName": "Widget A",
+    "Quantity": 100,
+    "DueDate": "2025-08-10T09:00:00",
+    "CustomerPriority": 5,
+    "Status": 0,
+    "RequiredMaterials": []
+  },
+  {
+    "Id": 4,
+    "ProductName": "Heavy Machinery Part Z3",
+    "Quantity": 50,
+    "DueDate": "2025-08-20T16:00:00",
+    "CustomerPriority": 8,
+    "Status": 0,
+    "RequiredMaterials": []
+  },
+  {
+    "Id": 5,
+    "ProductName": "Consumer Electronics Case",
+    "Quantity": 1000,
+    "DueDate": "2025-08-18T14:00:00",
+    "CustomerPriority": 6,
+    "Status": 1,
+    "RequiredMaterials": []
+  }
+]
