@@ -65,7 +65,7 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 
 ##  🐧 Linux/WSL Setup
 
-### Voraussetzungen
+## Voraussetzungen
 
 ### 1. .NET 8.0 SDK installieren:
 ```bash
@@ -80,7 +80,7 @@ sudo apt install -y dotnet-sdk-8.0
 sudo apt install jq
 ```
 
-### Installation & Einrichtung
+## Installation & Einrichtung
 
 ### 1. Repository klonen:
 ```bash
