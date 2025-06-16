@@ -107,7 +107,7 @@ curl -X POST http://localhost:5000/api/Scheduling/create -H "Content-Type: appli
 curl -X POST http://localhost:5000/api/Scheduling/status -H "Content-Type: application/json" -d '{}' | jq
 ```
 
-### Element-Status aktualisieren (Element 1 früh beenden)
+### Element-Status aktualisieren (Beispiel: Element 1 früh beenden)
 ```bash
  curl -X PUT http://localhost:5000/api/Scheduling/status -H "Content-Type: application/json" -d '{"scheduleId": 1234, "itemId": 1, "status": 2}' | jq
 ```
@@ -117,15 +117,10 @@ curl -X POST http://localhost:5000/api/Scheduling/status -H "Content-Type: appli
 curl -X POST http://localhost:5000/api/Scheduling/optimize -H "Content-Type: application/json" -d '{"
 naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
 ```
-### Erkenntnisse abrufen
+### KI-Erkenntnisse abrufen
 ```bash
 curl http://localhost:5000/api/Scheduling/insights | jq
 ```
-
-### Erk
-
-# Erkenntnisse abrufen
-
 
 ##  📄 Lizenz
 
