@@ -222,22 +222,13 @@ namespace ManufacturingScheduler.Infrastructure.AI
         }
         private SchedulingInterpretation ParseAIResponseToInterpretation(string aiResponse, string originalRequest)
         {
+            try
+            {
                 return new SchedulingInterpretation
                 {
                     SuggestedChanges = new List<ScheduleChange>(),
                     ExplanationText = aiResponse,
-                    IsValid = !string.isNullorWhiteSpace(aiResponse)
-                };
-            }
-            catch (JsonException ex)
-            {
-                _logger.LogWarning(ex, "Failed to parse AI response as JSON, using text interpretation");
-
-                return new SchedulingInterpretation
-                {
-                    SuggestedChanges = ExtractChangesFromText(aiResponse, originalRequest),
-                    ExplanationText = aiResponse,
-                    IsValid = !string.IsNullOrWhiteSpace(aiResponse)
+                    IsValid = !string.IsNullorWhiteSpace(aiResponse)
                 };
             }
             catch (Exception ex)
