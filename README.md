@@ -75,7 +75,7 @@ rm packages-microsoft-prod.deb sudo apt update &&
 sudo apt install -y dotnet-sdk-8.0
 ```
 
-### 2. jq für JSON-Formatierung installieren (optional aber empfohlen):
+### 2. Für JSON-Formatierung jq installieren (optional aber empfohlen):
 ```bash
 sudo apt install jq
 ```
