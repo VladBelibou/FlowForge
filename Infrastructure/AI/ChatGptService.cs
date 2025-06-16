@@ -222,102 +222,11 @@ namespace ManufacturingScheduler.Infrastructure.AI
         }
         private SchedulingInterpretation ParseAIResponseToInterpretation(string aiResponse, string originalRequest)
         {
-            try
-            {
-                // Try to parse as JSON first
-                var jsonDoc = JsonSerializer.Deserialize<JsonElement>(aiResponse);
-
-                var suggestedChanges = new List<ScheduleChange>();
-
-                if (jsonDoc.TryGetProperty("suggestedChanges", out var changesElement))
-                {
-                    foreach (var changeElement in changesElement.EnumerateArray())
-                    {
-                        // Only process changes that have valid numeric IDs
-                        if (TryGetIntFromJsonElement(changeElement, "orderId", out int orderId))
-                        {
-                            var change = new ScheduleChange
-                            {
-                                OrderId = orderId,
-                                Reason = changeElement.TryGetProperty("reason", out var reasonElement)
-                                    ? reasonElement.GetString() ?? ""
-                                    : ""
-                            };
-
-                            // Optional machine ID
-                            if (TryGetIntFromJsonElement(changeElement, "newMachineId", out int machineId))
-                            {
-                                change.NewMachineId = machineId;
-                            }
-
-                            // Optional start time
-                            if (changeElement.TryGetProperty("newStartTime", out var startElement))
-                            {
-                                var startTimeStr = startElement.GetString();
-                                if (!string.IsNullOrEmpty(startTimeStr) &&
-                                    startTimeStr != "N/A" &&
-
-                                    DateTime.TryParse(startTimeStr, out var startTime))
-                                {
-                                    change.NewStartTime = startTime;
-                                }
-                            }
-
-                            // Optional end time
-                            if (changeElement.TryGetProperty("newEndTime", out var endElement))
-                            {
-                                var endTimeStr = endElement.GetString();
-                                if (!string.IsNullOrEmpty(endTimeStr) &&
-                                    endTimeStr != "N/A" &&
-                                    DateTime.TryParse(endTimeStr, out var endTime))
-                                {
-                                    change.NewEndTime = endTime;
-                                }
-                            }
-
-                            // Handle status changes
-                            if (TryGetIntFromJsonElement(changeElement, "newStatus", out int statusValue))
-                            {
-                                change.NewStatus = (ScheduleItemStatus)statusValue;
-                            }
-
-                            // Handle "action" field for easier AI usage
-                            if (changeElement.TryGetProperty("action", out var actionElement))
-                            {
-                                var action = actionElement.GetString()?.ToLower();
-                                switch (action)
-                                {
-                                    case "start":
-                                    case "begin":
-                                    case "start_now":
-                                        change.NewStatus = ScheduleItemStatus.InProgress;
-                                        change.NewStartTime = DateTime.Now;
-                                        break;
-                                    case "complete":
-                                    case "finish":
-                                        change.NewStatus = ScheduleItemStatus.Completed;
-                                        change.NewEndTime = DateTime.Now;
-                                        break;
-                                    case "cancel":
-                                        change.NewStatus = ScheduleItemStatus.Cancelled;
-                                        break;
-                                }
-                            }
-
-                            suggestedChanges.Add(change);
-                        }
-                    }
-                }
-
                 return new SchedulingInterpretation
                 {
-                    SuggestedChanges = suggestedChanges,
-                    ExplanationText = jsonDoc.TryGetProperty("explanation", out var expElement)
-                        ? expElement.GetString() ?? aiResponse
-                        : aiResponse,
-                    IsValid = jsonDoc.TryGetProperty("isValid", out var validElement)
-                        ? validElement.GetBoolean()
-                        : true
+                    SuggestedChanges = new List<ScheduleChange>(),
+                    ExplanationText = aiResponse,
+                    IsValid = !string.isNullorWhiteSpace(aiResponse
                 };
             }
             catch (JsonException ex)
