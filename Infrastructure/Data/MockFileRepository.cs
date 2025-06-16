@@ -8,7 +8,7 @@ namespace ManufacturingScheduler.Infrastructure.Data
 
         public MockFileRepository(string fileName)
         {
-            _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MockData", fileName);
+            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "MockData", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
 
             Console.WriteLine($"DEBUG: Looking for file at: {_filePath}");
