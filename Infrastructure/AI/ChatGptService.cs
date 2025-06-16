@@ -228,7 +228,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
                 {
                     SuggestedChanges = new List<ScheduleChange>(),
                     ExplanationText = aiResponse,
-                    IsValid = !string.IsNullorWhiteSpace(aiResponse)
+                    IsValid = !string.IsNullOrWhiteSpace(aiResponse)
                 };
             }
             catch (Exception ex)
