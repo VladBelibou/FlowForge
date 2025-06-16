@@ -129,20 +129,12 @@ namespace ManufacturingScheduler.Infrastructure.AI
             sb.AppendLine("- Wenn ein abgeschlossener Auftrag erwähnt wird, bestätige, dass er bereits fertig ist");
             sb.AppendLine();
 
-            sb.AppendLine("Antworte mit in diesem Format:");
-            sb.AppendLine("{");
-            sb.AppendLine("  \"suggestedChanges\": [");
-            sb.AppendLine("    {");
-            sb.AppendLine("      \"orderId\": 1,");
-            sb.AppendLine("      \"action\": \"start\",  // Optionen: start, complete, cancel");
-            sb.AppendLine("      \"newMachineId\": 2,  // Optional");
-            sb.AppendLine("      \"newStartTime\": \"2025-06-01T10:00:00\",  // Optional");
-            sb.AppendLine("      \"reason\": \"Produktion sofort beginnen\"");
-            sb.AppendLine("    }");
-            sb.AppendLine("  ],");
-            sb.AppendLine("  \"explanation\": \"Detaillierte Erklärung der Änderungen und Statusbewusstsein\",");
-            sb.AppendLine("  \"isValid\": true");
-            sb.AppendLine("}");
+            sb.AppendLine("Antworte im Fließtext mit folgender Struktur:");
+            sb.AppendLine("1. AKTUELLER STATUS: Beschreibe den aktuellen Zustand des Zeitplans");
+            sb.AppendLine("2. ANALYSE: Identifiziere Probleme und Verbesserungsmöglichkeiten");
+            sb.AppendLine("3. EMPFEHLUNGEN: Gib konkrete Vorschläge für Optimierungen");
+            sb.AppendLine("");
+            sb.AppendLine("Verwende klare Absätze und halte die Antwort prägnant und umsetzbar.");
             sb.AppendLine();
             sb.AppendLine("Verfügbare Aktionen:");
             sb.AppendLine("- 'start' oder 'begin': Status auf InProgress ändern");
