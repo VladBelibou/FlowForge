@@ -95,6 +95,36 @@ nano appsettings.json
 dotnet run
 ```
 
+##  🐧 Linux/WSL | API testen
+
+### Neuen Zeitplan erstellen
+```bash
+curl -X POST http://localhost:5000/api/Scheduling/create -H "Content-Type: application/json" -d '{"schedulerName": "IhrName"}'
+```
+
+### Aktuellen Zeitplan-Status abrufen
+```bash
+curl -X POST http://localhost:5000/api/Scheduling/status -H "Content-Type: application/json" -d '{}' | jq
+```
+
+### Element-Status aktualisieren (Element 1 früh beenden)
+```bash
+ curl -X PUT http://localhost:5000/api/Scheduling/status -H "Content-Type: application/json" -d '{"scheduleId": 1234, "itemId": 1, "status": 2}' | jq
+```
+
+### KI-gestütze Optimierung (benötigt API-Schlüssel)
+```bash
+curl -X POST http://localhost:5000/api/Scheduling/optimize -H "Content-Type: application/json" -d '{"
+naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
+```
+### Erkenntnisse abrufen
+```bash
+curl http://localhost:5000/api/Scheduling/insights | jq
+```
+
+### Erk
+
+# Erkenntnisse abrufen
 
 
 ##  📄 Lizenz
