@@ -94,7 +94,7 @@ cd FlowForge
 nano appsettings.json
 ```
 
-### 3.Anwendung starten:
+### 3. Anwendung starten:
 ```bash
 dotnet run
 ```
