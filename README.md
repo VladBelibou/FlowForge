@@ -117,7 +117,7 @@ curl -X POST http://localhost:5000/api/Scheduling/status -H "Content-Type: appli
 curl -X POST http://localhost:5000/api/Scheduling/optimize -H "Content-Type: application/json" -d '{"
 naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
 ```
-### KI-Erkenntnisse abrufen
+### KI Erkenntnisse abrufen
 ```bash
 curl http://localhost:5000/api/Scheduling/insights | jq
 ```
