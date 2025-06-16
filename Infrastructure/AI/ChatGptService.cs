@@ -129,11 +129,8 @@ namespace ManufacturingScheduler.Infrastructure.AI
             sb.AppendLine("- Wenn ein abgeschlossener Auftrag erwähnt wird, bestätige, dass er bereits fertig ist");
             sb.AppendLine();
 
-            sb.AppendLine("Antworte im Fließtext mit folgender Struktur:");
-            sb.AppendLine("1. AKTUELLER STATUS: Beschreibe den aktuellen Zustand des Zeitplans");
-            sb.AppendLine("2. ANALYSE: Identifiziere Probleme und Verbesserungsmöglichkeiten");
-            sb.AppendLine("3. EMPFEHLUNGEN: Gib konkrete Vorschläge für Optimierungen");
-            sb.AppendLine("");
+            sb.AppendLine("Antworte kurz und prägnant (max. 300 Wörter) ohne Zeilenumbrüche:");
+            sb.AppendLine("STATUS: [Aktueller Zustand in 3 Sätze] ANALYSE: [Hauptproblem in 3 Sätze] EMPFEHLUNG: [Lösung in 3 Sätze]");
             sb.AppendLine("Verwende klare Absätze und halte die Antwort prägnant und umsetzbar.");
             sb.AppendLine();
             sb.AppendLine("Verfügbare Aktionen:");
