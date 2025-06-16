@@ -129,9 +129,8 @@ namespace ManufacturingScheduler.Infrastructure.AI
             sb.AppendLine("- Wenn ein abgeschlossener Auftrag erwähnt wird, bestätige, dass er bereits fertig ist");
             sb.AppendLine();
 
-            sb.AppendLine("Antworte in EINEM einzigen Fließtext ohne Absätze oder Zeilenumbrüche:");
-            sb.AppendLine("STATUS: [Aktueller Zustand in 3 Sätze] ANALYSE: [Hauptproblem in 3 Sätze] EMPFEHLUNG: [Lösung in 3 Sätze]");
-            sb.AppendLine();
+            sb.AppendLine("WICHTIG: Antworte in einem einzigen, langen Satz ohne jegliche Zeilenschaltungen, Absätze oder \\n Zeichen:");           
+            sb.AppendLine("Schreibe: STATUS [text] ANALYSE [text] EMPFEHLUNG [text] alles hintereinander ohne Unterbrechungen.");
             sb.AppendLine("Verfügbare Aktionen:");
             sb.AppendLine("- 'start' oder 'begin': Status auf InProgress ändern");
             sb.AppendLine("- 'complete' oder 'finish': Status auf Completed ändern");
