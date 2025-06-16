@@ -221,7 +221,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
                 return new SchedulingInterpretation
                 {
                     SuggestedChanges = new List<ScheduleChange>(),
-                    ExplanationText = aiResponse.Replace("\n", " ").Replace("\r", " ").Trim()
+                    ExplanationText = aiResponse.Replace("\n", " ").Replace("\r", " ").Trim(),
                     IsValid = !string.IsNullOrWhiteSpace(aiResponse)
                 };
             }
