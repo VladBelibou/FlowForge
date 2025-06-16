@@ -65,8 +65,6 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 
 ##  🐧 Linux/WSL Setup
 
-## Voraussetzungen
-
 ### 1. .NET 8.0 SDK installieren:
 ```bash
 wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb &&
@@ -80,21 +78,19 @@ sudo apt install -y dotnet-sdk-8.0
 sudo apt install jq
 ```
 
-## Installation & Einrichtung
-
-### 1. Repository klonen:
+### 3. Repository klonen:
 ```bash
 git clone https://github.com/VladBelibou/FlowForge.git
 cd FlowForge
 ```
 
-### 2. API-Einstellungen konfigurieren
+### 4. API-Einstellungen konfigurieren
 ```bash
 # appsettings.json bearbeiten und OpenAI API-Schlüssel hinzufügen
 nano appsettings.json
 ```
 
-### 3. Anwendung starten:
+### 5. Anwendung starten:
 ```bash
 dotnet run
 ```
