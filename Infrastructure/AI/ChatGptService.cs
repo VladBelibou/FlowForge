@@ -131,7 +131,6 @@ namespace ManufacturingScheduler.Infrastructure.AI
 
             sb.AppendLine("Antworte kurz und prägnant (max. 300 Wörter) ohne Zeilenumbrüche:");
             sb.AppendLine("STATUS: [Aktueller Zustand in 3 Sätze] ANALYSE: [Hauptproblem in 3 Sätze] EMPFEHLUNG: [Lösung in 3 Sätze]");
-            sb.AppendLine("Verwende klare Absätze und halte die Antwort prägnant und umsetzbar.");
             sb.AppendLine();
             sb.AppendLine("Verfügbare Aktionen:");
             sb.AppendLine("- 'start' oder 'begin': Status auf InProgress ändern");
