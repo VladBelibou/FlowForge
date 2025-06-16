@@ -51,7 +51,7 @@ namespace ManufacturingScheduler.Application.Services
             var item = schedule.ScheduleItems.FirstOrDefault(i => i.Id == itemId);
 
             if (item == null)
-                throw new ArgumentException($"Schedule item {itemId} not found");
+                throw new ArgumentException($"Zeitplan-Element {itemId} nicht gefunden");
 
             // Elementstatus aktualisieren
             item.Status = ScheduleItemStatus.Completed;
@@ -72,8 +72,8 @@ namespace ManufacturingScheduler.Application.Services
                 // Geplante Menge verwenden, falls tatsächliche nicht angegeben
                 item.ActualQuantity = actualQuantity ?? item.PlannedQuantity;
 
-            Console.WriteLine($"DEBUG SERVICE: Completing item {itemId} at {completionTime:MM/dd HH:mm}");
-            Console.WriteLine($"DEBUG SERVICE: Original end time was {item.EndTime:MM/dd HH:mm}");
+            Console.WriteLine($"DEBUG SERVICE: Schließe Element {itemId} um {completionTime:MM/dd HH:mm} ab");
+            Console.WriteLine($"DEBUG SERVICE: Ursprüngliche Endzeit war {item.EndTime:MM/dd HH:mm}");
 
             // Elementstatus aktualisieren
             item.Status = ScheduleItemStatus.Completed;
@@ -81,35 +81,35 @@ namespace ManufacturingScheduler.Application.Services
             item.ActualQuantity = actualQuantity ?? item.PlannedQuantity;
             item.Notes = notes;
 
-            Console.WriteLine($"DEBUG SERVICE: Item status updated to {item.Status}");
+            Console.WriteLine($"DEBUG SERVICE: Element-Status aktualisiert auf {item.Status}");
 
             // Store original end date for comparison
             var originalEndDate = schedule.EstimatedEndDate;
-            Console.WriteLine($"DEBUG SERVICE: Original estimated end date: {originalEndDate:MM/dd HH:mm}");
+            Console.WriteLine($"DEBUG SERVICE: Ursprünglich geschätztes Enddatum: {originalEndDate:MM/dd HH:mm}");
 
             // Recalculate the entire schedule
             schedule.RecalculateSchedule();
 
             // Get new end date after recalculation
             var newEndDate = schedule.EstimatedEndDate;
-            Console.WriteLine($"DEBUG SERVICE: New estimated end date: {newEndDate:MM/dd HH:mm}");
+            Console.WriteLine($"DEBUG SERVICE: Neues geschätztes Enddatum: {newEndDate:MM/dd HH:mm}");
 
             // Update explanation with the change
             var timeSaved = originalEndDate - newEndDate;
             if (timeSaved.TotalMinutes > 0)
             {
-                schedule.Explanation = $"Item {itemId} completed early. Schedule updated - saved {timeSaved.TotalHours:F1} hours. New end date: {newEndDate:MM/dd HH:mm}";
+                schedule.Explanation = $"Element {itemId} vorzeitig abgeschlossen. Zeitplan aktualisiert - {timeSaved.TotalHours:F1} Stunden gespart. Neues Enddatum: {newEndDate:MM/dd HH:mm}";
             }
             else if (timeSaved.TotalMinutes < 0)
             {
-                schedule.Explanation = $"Item {itemId} completed late. Schedule updated - added {Math.Abs(timeSaved.TotalHours):F1} hours. New end date: {newEndDate:MM/dd HH:mm}";
+                schedule.Explanation = $"Element {itemId} verspätet abgeschlossen. Zeitplan aktualisiert - {Math.Abs(timeSaved.TotalHours):F1} Stunden hinzugefügt. Neues Enddatum: {newEndDate:MM/dd HH:mm}";
             }
             else
             {
-                schedule.Explanation = $"Item {itemId} completed on time. New end date: {newEndDate:MM/dd HH:mm}";
+                schedule.Explanation = $"Element {itemId} pünktlich abgeschlossen. Neues Enddatum: {newEndDate:MM/dd HH:mm}";
             }
 
-            Console.WriteLine($"DEBUG SERVICE: Updated explanation: {schedule.Explanation}");
+            Console.WriteLine($"DEBUG SERVICE: Neue Erklärung: {schedule.Explanation}");
 
             await _scheduleRepository.SaveScheduleAsync(schedule);
             return schedule;
@@ -129,7 +129,7 @@ namespace ManufacturingScheduler.Application.Services
             var item = schedule.ScheduleItems.FirstOrDefault(i => i.Id == itemId);
 
             if (item == null)
-                throw new ArgumentException($"Schedule item {itemId} not found");
+                throw new ArgumentException($"Zeitplan-Element {itemId} nicht gefunden");
 
             // Update the item
             item.Status = status;
@@ -138,7 +138,7 @@ namespace ManufacturingScheduler.Application.Services
             if (status == ScheduleItemStatus.Completed && !actualEndTime.HasValue)
             {
                 item.ActualEndTime = DateTime.Now;
-                Console.WriteLine($"DEBUG: Auto-set completion time to {DateTime.Now:MM/dd HH:mm:ss}");
+                Console.WriteLine($"DEBUG: Automatisches Setzen der Abschlusszeit auf {DateTime.Now:MM/dd HH:mm:ss}");
             }
             else if (actualEndTime.HasValue)
             {
@@ -151,8 +151,8 @@ namespace ManufacturingScheduler.Application.Services
             if (status == ScheduleItemStatus.Completed || status == ScheduleItemStatus.Cancelled)
             {
                 schedule.RecalculateSchedule();
-                schedule.Explanation = $"Schedule updated due to status change. " +
-                                     $"New end date: {schedule.EstimatedEndDate:MM/dd HH:mm}";
+                schedule.Explanation = $"Zeitplan aufgrund von Statusänderung aktualisiert. " +
+                                     $"Neues Enddatum: {schedule.EstimatedEndDate:MM/dd HH:mm}";
             }
 
             await _scheduleRepository.SaveScheduleAsync(schedule);
@@ -240,43 +240,43 @@ namespace ManufacturingScheduler.Application.Services
                 var item = updatedSchedule.ScheduleItems.FirstOrDefault(i => i.OrderId == change.OrderId);
                 if (item != null)
                 {
-                    Console.WriteLine($"DEBUG APPLY: Applying changes to Order {change.OrderId}");
+                    Console.WriteLine($"DEBUG APPLY: Wende Änderungen auf Bestellung {change.OrderId} an");
 
                     if (change.NewStartTime.HasValue)
                     {
-                        Console.WriteLine($"DEBUG APPLY: Changing start time from {item.StartTime:MM/dd HH:mm} to {change.NewStartTime.Value:MM/dd HH:mm}");
+                        Console.WriteLine($"DEBUG APPLY: Ändere Startzeit von {item.StartTime:MM/dd HH:mm} auf {change.NewStartTime.Value:MM/dd HH:mm}");
                         item.StartTime = change.NewStartTime.Value;
                     }
 
                     if (change.NewEndTime.HasValue)
                     {
-                        Console.WriteLine($"DEBUG APPLY: Changing end time from {item.EndTime:MM/dd HH:mm} to {change.NewEndTime.Value:MM/dd HH:mm}");
+                        Console.WriteLine($"DEBUG APPLY: Ändere Endzeit von {item.EndTime:MM/dd HH:mm} auf {change.NewEndTime.Value:MM/dd HH:mm}");
                         item.EndTime = change.NewEndTime.Value;
                     }
 
                     if (change.NewMachineId.HasValue)
                     {
-                        Console.WriteLine($"DEBUG APPLY: Changing machine from {item.MachineId} to {change.NewMachineId.Value}");
+                        Console.WriteLine($"DEBUG APPLY: Ändere Maschine von {item.MachineId} auf {change.NewMachineId.Value}");
                         item.MachineId = change.NewMachineId.Value;
                     }
 
                     // Apply status changes
                     if (change.NewStatus.HasValue)
                     {
-                        Console.WriteLine($"DEBUG APPLY: Changing status from {item.Status} to {change.NewStatus.Value}");
+                        Console.WriteLine($"DEBUG APPLY: Ändere Status von {item.Status} auf {change.NewStatus.Value}");
                         item.Status = change.NewStatus.Value;
 
                         // Auto-set timestamps based on status
                         if (change.NewStatus.Value == ScheduleItemStatus.InProgress && !item.ActualStartTime.HasValue)
                         {
                             item.ActualStartTime = DateTime.Now;
-                            Console.WriteLine($"DEBUG APPLY: Auto-set actual start time to {DateTime.Now:MM/dd HH:mm}");
+                            Console.WriteLine($"DEBUG APPLY: Automatisches Setzen der tatsächlichen Startzeit auf {DateTime.Now:MM/dd HH:mm}");
                         }
 
                         if (change.NewStatus.Value == ScheduleItemStatus.Completed && !item.ActualEndTime.HasValue)
                         {
                             item.ActualEndTime = DateTime.Now;
-                            Console.WriteLine($"DEBUG APPLY: Auto-set actual end time to {DateTime.Now:MM/dd HH:mm}");
+                            Console.WriteLine($"DEBUG APPLY: Automatisches Setzen der tatsächlichen Endzeit auf {DateTime.Now:MM/dd HH:mm}");
                         }
                     }
                 }
@@ -294,7 +294,7 @@ namespace ManufacturingScheduler.Application.Services
             var newStartTime = DateTime.Now.AddMinutes(30);
             var timeShift = newStartTime - earliestCurrentStart;
 
-            Console.WriteLine($"DEBUG RESCHEDULE: Shifting schedule by {timeShift.TotalHours:F1} hours to start now");
+            Console.WriteLine($"DEBUG RESCHEDULE: Verschiebe Zeitplan um {timeShift.TotalHours:F1} Stunden für sofortigen Start");
 
             // Shift all items by the same amount
             foreach (var item in schedule.ScheduleItems)
@@ -305,11 +305,11 @@ namespace ManufacturingScheduler.Application.Services
                 item.StartTime = item.StartTime + timeShift;
                 item.EndTime = item.EndTime + timeShift;
 
-                Console.WriteLine($"DEBUG RESCHEDULE: Item {item.Id} moved from {oldStart:MM/dd HH:mm}-{oldEnd:MM/dd HH:mm} to {item.StartTime:MM/dd HH:mm}-{item.EndTime:MM/dd HH:mm}");
+                Console.WriteLine($"DEBUG RESCHEDULE: Element {item.Id} verschoben von {oldStart:MM/dd HH:mm}-{oldEnd:MM/dd HH:mm} auf {item.StartTime:MM/dd HH:mm}-{item.EndTime:MM/dd HH:mm}");
             }
 
             schedule.Explanation = $"Schedule rescheduled to start immediately at {newStartTime:MM/dd HH:mm}. Ready for production!";
-            schedule.CreatedBy += " (Rescheduled)";
+            schedule.CreatedBy += " (Neu geplant)";
 
             await _scheduleRepository.SaveScheduleAsync(schedule);
             return schedule;
