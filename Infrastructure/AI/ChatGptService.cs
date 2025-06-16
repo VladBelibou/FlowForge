@@ -129,7 +129,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
             sb.AppendLine("- Wenn ein abgeschlossener Auftrag erwähnt wird, bestätige, dass er bereits fertig ist");
             sb.AppendLine();
 
-            sb.AppendLine("Antworte mit JSON in diesem Format:");
+            sb.AppendLine("Antworte mit in diesem Format:");
             sb.AppendLine("{");
             sb.AppendLine("  \"suggestedChanges\": [");
             sb.AppendLine("    {");
