@@ -131,11 +131,9 @@ curl -X DELETE http://localhost:5000/api/Scheduling/1234
 
 ### 1. .NET 8.0 SDK installieren:
 - Von https://dotnet.microsoft.com/download herunterladen
-- Installer ausführen und Setup-Assistenten folgen
 
 ### 2. Git installieren:
 - Von https://git-scm.com/download/win herunterladen
-- Mit Standardeinstellungen installieren
 
 ### 3. Repository klonen:
 ```ps1
