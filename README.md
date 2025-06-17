@@ -13,15 +13,14 @@ FlowForge ist ein KI-gestütztes Planungstool für die Produktion gedacht um Abl
 
 ## 📊 Ein praktisches Beispiel
 
-**Situation:** "Die Wartung von Maschine 2 steht unerwartet an."
+**Situation:** "Maschine 2 muss plötzlich gewartet werden."
 
-**Eingabe:** "Notfallwartung von Maschine 2 erforderlich, optimiere alles dementsprechend."
+**Eingabe:** "Maschine 2 ist ausgefallen, bitte Zeitplan umstellen."
 
 **FlowForge reagiert:**
-- Verschiebt automatisch alle Aufträge von Maschine 2
-- Verteilt sie intelligent auf andere Maschinen
-- Minimiert Verzögerungen
-- Informiert über die Änderungen
+- Verschiebt die Aufträge auf andere Maschinen
+- Sorgt für minimale Verzögerungen
+- Informiert über alle Änderungen
 
 ### So sieht eine typische Antwort aus
 
