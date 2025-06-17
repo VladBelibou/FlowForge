@@ -56,10 +56,10 @@ Anstatt komplizierte Befehle einzugeben, kann einfach geschrieben werden:
 
 ### 2. **Alles im Blick** 
 - Sofortige Erkennung, wenn etwas nicht nach Plan läuft
-- Farbige Markierungen zeigen kritische Bereiche
+- Bei Einsichten zeigen farbige Markierungen kritische Bereiche
 
 ### 3. **Intelligente Anpassungen** 
-- Bei Verzögerungen werden automatisch neue Zeitpläne berechnet
+- Neue Zeitpläne werden bei Verzögerungen automatisch berechnet
 - Optimierungsvorschläge basieren auf echten Produktionsdaten
 
 ##  🐧 Linux/WSL Setup
