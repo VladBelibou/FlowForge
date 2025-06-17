@@ -116,68 +116,75 @@ curl -X POST http://localhost:5000/api/Scheduling/status -H "Content-Type: appli
 curl -X POST http://localhost:5000/api/Scheduling/optimize -H "Content-Type: application/json" -d '{"
 naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
 ```
+
 ### KI Erkenntnisse abrufen
 ```bash
 curl http://localhost:5000/api/Scheduling/insights | jq
 ```
 
-##  🐧 Windows Setup
+### Zeitplan löschen
+```bash
+curl -X DELETE http://localhost:5000/api/Scheduling/1234
+```
+
+##  🪟 Windows Setup
 
 ### 1. .NET 8.0 SDK installieren:
-```powershell
-wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb &&
-sudo dpkg -i packages-microsoft-prod.deb &&
-rm packages-microsoft-prod.deb sudo apt update &&
-sudo apt install -y dotnet-sdk-8.0
-```
+- Von https://dotnet.microsoft.com/download herunterladen
+- Installer ausführen und Setup-Assistenten folgen
 
-### 2. Für JSON-Formatierung jq installieren (optional aber empfohlen):
-```bash
-sudo apt install jq
-```
+### 2. Git installieren:
+- Von https://git-scm.com/download/win herunterladen
+- Mit Standardeinstellungen installieren
 
 ### 3. Repository klonen:
-```bash
+```ps1
 git clone https://github.com/VladBelibou/FlowForge.git
 cd FlowForge
 ```
 
 ### 4. API-Einstellungen konfigurieren
-```bash
-# appsettings.json bearbeiten und OpenAI API-Schlüssel hinzufügen
-nano appsettings.json
+```ps1
+# appsettings.json im Editor öffnen und OpenAI API-Schlüssel hinzufügen
+notepad appsettings.json
 ```
 
 ### 5. Anwendung starten:
-```bash
+```ps1
 dotnet run
 ```
 
-##  🐧 Linux/WSL | API testen
+##  🪟 Windows | API testen
 
 ### Neuen Zeitplan erstellen
-```bash
-curl -X POST http://localhost:5000/api/Scheduling/create -H "Content-Type: application/json" -d '{"schedulerName": "IhrName"}' | jq
+```ps1
+(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/create" -Method Post -ContentType "application/json" -Body '{"schedulerName": "IhrName"}') | ConvertTo-Json
 ```
 
 ### Aktuellen Zeitplan-Status abrufen
-```bash
-curl -X POST http://localhost:5000/api/Scheduling/status -H "Content-Type: application/json" -d '{}' | jq
+```ps1
+(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/status" -Method Post -ContentType "application/json" -Body '{}') | ConvertTo-Json
 ```
 
 ### Element-Status aktualisieren (Beispiel: Element 1 früh beenden)
-```bash
- curl -X PUT http://localhost:5000/api/Scheduling/status -H "Content-Type: application/json" -d '{"scheduleId": 1234, "itemId": 1, "status": 2}' | jq
+```ps1
+(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/status" -Method Put -ContentType "application/json" -Body '{"scheduleId": 1234, "itemId": 1, "status": 2}') | ConvertTo-Json
 ```
 
 ### KI-gestütze Optimierung (benötigt API-Schlüssel)
-```bash
+```ps1
 curl -X POST http://localhost:5000/api/Scheduling/optimize -H "Content-Type: application/json" -d '{"
 naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
 ```
+
 ### KI Erkenntnisse abrufen
-```bash
-curl http://localhost:5000/api/Scheduling/insights | jq
+```ps1
+(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/insights" -Method Get) | ConvertTo-Json
+```
+
+### Zeitplan löschen
+```ps1
+Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/1234" -Method Delete
 ```
 
 ##  📄 Lizenz
