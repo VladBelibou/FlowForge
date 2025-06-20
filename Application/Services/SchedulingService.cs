@@ -127,6 +127,7 @@ namespace ManufacturingScheduler.Application.Services
         {
             var schedule = await GetScheduleByIdAsync(scheduleId);
             var item = schedule.ScheduleItems.FirstOrDefault(i => i.Id == itemId);
+            var originalEndDate = schedule.EstimatedEndDate;
 
             if (item == null)
                 throw new ArgumentException($"Zeitplan-Element {itemId} nicht gefunden");
@@ -134,6 +135,13 @@ namespace ManufacturingScheduler.Application.Services
             // Update the item
             item.Status = status;
             if (actualStartTime.HasValue) item.ActualStartTime = actualStartTime;
+
+             if (status == ScheduleItemStatus.InProgress && !actualStartTime.HasValue)
+             {
+                item.ActualStartTime = DateTime.Now;
+                Console.WriteLine($"DEBUG: Automatisches Setzen der Startzeit auf {DateTime.Now:MM/dd
+            HH:mm:ss}");
+            }
             // AUTO-SETZEN auf aktuelle Zeit, falls nicht angegeben und Status abgeschlossen
             if (status == ScheduleItemStatus.Completed && !actualEndTime.HasValue)
             {
@@ -148,11 +156,21 @@ namespace ManufacturingScheduler.Application.Services
             if (!string.IsNullOrEmpty(notes)) item.Notes = notes;
 
             // Recalculate schedule if item was completed or cancelled
-            if (status == ScheduleItemStatus.Completed || status == ScheduleItemStatus.Cancelled)
+            if (status == ScheduleItemStatus.Completed || status == ScheduleItemStatus.Cancelled || status == ScheduleItemStatus.InProgress || status == ScheduleItemStatus.Delayed)
             {
                 schedule.RecalculateSchedule();
-                schedule.Explanation = $"Zeitplan aufgrund von Statusänderung aktualisiert. " +
-                                     $"Neues Enddatum: {schedule.EstimatedEndDate:MM/dd HH:mm}";
+
+                var newEndDate = schedule.EstimatedEndDate;
+                var timeDifference = originalEndDate - newEndDate;
+                                
+                // KI-getsützte Erklärung
+                var explanation Prompt = $"A schedule item (ID: {itemId}) status was changed to {status}. " +
+                                         $"Original end date was {originalEndDate:MM/dd HH:mm}, " +
+                                         $"new end date is {newEndDate:MM/dd HH:mm}. " +
+                                         $"Time difference: {timeDifference.TotalHours:F1} hours. " +
+                                         $"Write a brief German explanation of this change and its impact.";
+
+                schedule.Explanation = await _chatGptService.GenerateExplanationAsync(explanationPrompt);
             }
 
             await _scheduleRepository.SaveScheduleAsync(schedule);
