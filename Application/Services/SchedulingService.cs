@@ -99,7 +99,7 @@ namespace ManufacturingScheduler.Application.Services
             var explanationPrompt = $"A schedule item (ID: {itemId}) was completed. " +
                          $"Original end date was {originalEndDate:MM/dd HH:mm}, " +
                          $"new end date is {newEndDate:MM/dd HH:mm}. " +
-                         $"Time difference: {timeSaved.TotalHours:F1} hours. " +
+                         $"Time difference: {timeDifference.TotalHours:F1} hours. " +
                          $"Write a brief German explanation of this completion and its impact.";
 
             schedule.Explanation = await _chatGptService.GenerateExplanationAsync(explanationPrompt);
