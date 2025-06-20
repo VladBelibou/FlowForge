@@ -171,8 +171,7 @@ dotnet run
 
 ### KI-gestütze Optimierung (benötigt API-Schlüssel)
 ```ps1
-curl -X POST http://localhost:5000/api/Scheduling/optimize -H "Content-Type: application/json" -d '{"
-naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
+(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/optimize" -Method Post -ContentType "application/json" -Body '{"naturalLanguageRequest": "Optimiere diesen Zeitplan"}') | ConvertTo-Json
 ```
 
 ### KI Erkenntnisse abrufen
