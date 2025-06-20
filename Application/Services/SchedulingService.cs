@@ -139,7 +139,7 @@ namespace ManufacturingScheduler.Application.Services
              if (status == ScheduleItemStatus.InProgress && !actualStartTime.HasValue)
              {
                 item.ActualStartTime = DateTime.Now;
-                Console.WriteLine($"DEBUG: Automatisches Setzen der Startzeit auf {DateTime.Now:MM/ddHH:mm:ss}");
+                Console.WriteLine($"DEBUG: Automatisches Setzen der Startzeit auf {DateTime.Now:MM/dd HH:mm:ss}");
             }
             // AUTO-SETZEN auf aktuelle Zeit, falls nicht angegeben und Status abgeschlossen
             if (status == ScheduleItemStatus.Completed && !actualEndTime.HasValue)
