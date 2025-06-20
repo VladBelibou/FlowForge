@@ -62,6 +62,48 @@ namespace ManufacturingScheduler.Infrastructure.AI
             }
         }
 
+          public async Task<string> GenerateExplanationAsync(string prompt)
+          {
+              try
+              {
+                  // Use a simpler, faster request for brief explanations
+                  var requestBody = new
+                  {
+                      model = "gpt-3.5-turbo", // Use faster model for simple explanations
+                      messages = new[]
+                      {
+                          new { role = "system", content = "Du bist ein Fertigungsplaner. Gib kurze, präzise deutsche Erklärungen zu Statusänderungen in Produktionsplänen." },
+                          new { role = "user", content = prompt }
+                      },
+                      max_tokens = 150, // Keep it short
+                      temperature = 0.3  // Lower temperature for more consistent responses
+                  };
+
+                  var json = JsonSerializer.Serialize(requestBody);
+                  var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                  var response = await _httpClient.PostAsync(_endpoint, content);
+                  response.EnsureSuccessStatusCode();
+
+                  var responseJson = await response.Content.ReadAsStringAsync();
+                  var responseObj = JsonSerializer.Deserialize<JsonElement>(responseJson);
+
+                  var explanation = responseObj.GetProperty("choices")[0]
+                                             .GetProperty("message")
+                                             .GetProperty("content")
+                                             .GetString() ?? "Keine Antwort erhalten";
+
+                  // Clean up the response - remove extra newlines and quotes
+                  return explanation.Trim().Replace("\n", " ").Replace("\"", "");
+              }
+              catch (Exception ex)
+              {
+                  _logger.LogError(ex, "Error generating explanation");
+                  return $"Statusänderung verarbeitet. Erklärung vorübergehend nicht verfügbar.";
+              }
+          }
+
+
         private string BuildSchedulingPrompt(string request, ProductionSchedule schedule)
         {
             var sb = new StringBuilder();
