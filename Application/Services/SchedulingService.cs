@@ -94,20 +94,13 @@ namespace ManufacturingScheduler.Application.Services
             var newEndDate = schedule.EstimatedEndDate;
             Console.WriteLine($"DEBUG SERVICE: Neues geschätztes Enddatum: {newEndDate:MM/dd HH:mm}");
 
-            // Update explanation with the change
-            var timeSaved = originalEndDate - newEndDate;
-            if (timeSaved.TotalMinutes > 0)
-            {
-                schedule.Explanation = $"Element {itemId} vorzeitig abgeschlossen. Zeitplan aktualisiert - {timeSaved.TotalHours:F1} Stunden gespart. Neues Enddatum: {newEndDate:MM/dd HH:mm}";
-            }
-            else if (timeSaved.TotalMinutes < 0)
-            {
-                schedule.Explanation = $"Element {itemId} verspätet abgeschlossen. Zeitplan aktualisiert - {Math.Abs(timeSaved.TotalHours):F1} Stunden hinzugefügt. Neues Enddatum: {newEndDate:MM/dd HH:mm}";
-            }
-            else
-            {
-                schedule.Explanation = $"Element {itemId} pünktlich abgeschlossen. Neues Enddatum: {newEndDate:MM/dd HH:mm}";
-            }
+            var explanationPrompt = $"A schedule item (ID: {itemId}) was completed. " +
+                         $"Original end date was {originalEndDate:MM/dd HH:mm}, " +
+                         $"new end date is {newEndDate:MM/dd HH:mm}. " +
+                         $"Time difference: {timeSaved.TotalHours:F1} hours. " +
+                         $"Write a brief German explanation of this completion and its impact.";
+
+            schedule.Explanation = await _chatGptService.GenerateExplanationAsync(explanationPrompt);
 
             Console.WriteLine($"DEBUG SERVICE: Neue Erklärung: {schedule.Explanation}");
 
