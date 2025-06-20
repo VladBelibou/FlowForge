@@ -176,7 +176,7 @@ dotnet run
 
 ### KI Erkenntnisse abrufen
 ```ps1
-(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/insights" -Method Get)
+(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/insights")
 ```
 
 ### Zeitplan löschen
