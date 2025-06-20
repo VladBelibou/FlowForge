@@ -119,7 +119,7 @@ naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
 
 ### KI Erkenntnisse abrufen
 ```bash
-curl http://localhost:5000/api/Scheduling/insights | jq
+curl http://localhost:5000/api/Scheduling/insights
 ```
 
 ### Zeitplan löschen
@@ -177,7 +177,7 @@ naturalLanguageRequest": "Optimiere diesen Zeitplan"}' | jq
 
 ### KI Erkenntnisse abrufen
 ```ps1
-(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/insights" -Method Get) | ConvertTo-Json
+(Invoke-RestMethod -Uri "http://localhost:5000/api/Scheduling/insights" -Method Get)
 ```
 
 ### Zeitplan löschen
