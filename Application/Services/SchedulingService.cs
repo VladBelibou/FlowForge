@@ -94,6 +94,8 @@ namespace ManufacturingScheduler.Application.Services
             var newEndDate = schedule.EstimatedEndDate;
             Console.WriteLine($"DEBUG SERVICE: Neues geschätztes Enddatum: {newEndDate:MM/dd HH:mm}");
 
+            var timeDifference = originalEndDate - newEndDate;
+            
             var explanationPrompt = $"A schedule item (ID: {itemId}) was completed. " +
                          $"Original end date was {originalEndDate:MM/dd HH:mm}, " +
                          $"new end date is {newEndDate:MM/dd HH:mm}. " +
