@@ -9,7 +9,7 @@
 
 ## 🎯 Was ist FlowForge?
 
-FlowForge ist ein KI-gestütztes Planungstool für die Produktion gedacht um Abläufe zu optimieren.  Das System ermöglicht es, Produktionsabläufe über natürliche Sprache zu steuern und anzupassen.
+FlowForge ist ein KI-gestütztes Planungstool, das zur Optimierung von Produktionsabläufen gedacht ist. Es ermöglicht, Produktionsprozesse einfach per natürlicher Sprache zu steuern und flexibel anzupassen.
 
 ## 📊 Ein praktisches Beispiel
 
