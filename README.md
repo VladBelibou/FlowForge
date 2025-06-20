@@ -20,7 +20,7 @@ FlowForge ist ein KI-gestütztes Planungstool, das zur Optimierung von Produktio
 **FlowForge reagiert:**
 - Verschiebt die Aufträge auf andere Maschinen
 - Sorgt für minimale Verzögerungen
-- Informiert über alle Änderungen
+- Informiert den Benutzer über alle Änderungen
 
 ### So sieht eine typische Antwort aus
 
