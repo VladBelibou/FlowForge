@@ -139,8 +139,7 @@ namespace ManufacturingScheduler.Application.Services
              if (status == ScheduleItemStatus.InProgress && !actualStartTime.HasValue)
              {
                 item.ActualStartTime = DateTime.Now;
-                Console.WriteLine($"DEBUG: Automatisches Setzen der Startzeit auf {DateTime.Now:MM/dd
-            HH:mm:ss}");
+                Console.WriteLine($"DEBUG: Automatisches Setzen der Startzeit auf {DateTime.Now:MM/ddHH:mm:ss}");
             }
             // AUTO-SETZEN auf aktuelle Zeit, falls nicht angegeben und Status abgeschlossen
             if (status == ScheduleItemStatus.Completed && !actualEndTime.HasValue)
@@ -164,7 +163,7 @@ namespace ManufacturingScheduler.Application.Services
                 var timeDifference = originalEndDate - newEndDate;
                                 
                 // KI-getsützte Erklärung
-                var explanation Prompt = $"A schedule item (ID: {itemId}) status was changed to {status}. " +
+                var explanationPrompt = $"A schedule item (ID: {itemId}) status was changed to {status}. " +
                                          $"Original end date was {originalEndDate:MM/dd HH:mm}, " +
                                          $"new end date is {newEndDate:MM/dd HH:mm}. " +
                                          $"Time difference: {timeDifference.TotalHours:F1} hours. " +
