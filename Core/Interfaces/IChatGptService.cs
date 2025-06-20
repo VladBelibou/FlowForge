@@ -6,5 +6,6 @@ namespace ManufacturingScheduler.Core.Interfaces
     {
         Task<SchedulingInterpretation> InterpretSchedulingRequestAsync(string request, ProductionSchedule currentSchedule);
         Task<string> AnalyzeScheduleAsync(ProductionSchedule schedule);
+        Task<string> GenerateExplanationAsync(string prompt); 
     }
 }
