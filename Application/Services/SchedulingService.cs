@@ -115,7 +115,7 @@ namespace ManufacturingScheduler.Application.Services
 
         // Update schedule item status
         public async Task<ProductionSchedule> UpdateScheduleItemStatusAsync(
-            int scheduleId,
+            int? scheduleId,
             int itemId,
             ScheduleItemStatus status,
             DateTime? actualStartTime = null,
@@ -123,7 +123,10 @@ namespace ManufacturingScheduler.Application.Services
             int? actualQuantity = null,
             string? notes = null)
         {
-            var schedule = await GetScheduleByIdAsync(scheduleId);
+            var schedule = scheduleId.HasValue
+                ? await GetScheduleByIdAsync(scheduleId.Value)
+                : await GetCurrentScheduleAsync();
+            
             var item = schedule.ScheduleItems.FirstOrDefault(i => i.Id == itemId);
             var originalEndDate = schedule.EstimatedEndDate;
 
