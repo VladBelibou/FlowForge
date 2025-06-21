@@ -41,13 +41,16 @@ namespace ManufacturingScheduler.Application.Services
         }
 
         public async Task<ProductionSchedule> CompleteScheduleItemAsync(
-            int scheduleId,
+            int? scheduleId,
             int itemId,
             int? actualQuantity,
             DateTime? completionTime,
             string? notes = null)
         {
-            var schedule = await GetScheduleByIdAsync(scheduleId);
+            var schedule = scheduleId.HasValue
+                ? await GetScheduleByIdAsync(scheduleId.Value)
+                : await GetCurrentScheduleAsync();
+            
             var item = schedule.ScheduleItems.FirstOrDefault(i => i.Id == itemId);
 
             if (item == null)
