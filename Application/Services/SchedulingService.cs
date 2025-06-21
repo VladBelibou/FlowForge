@@ -152,7 +152,11 @@ namespace ManufacturingScheduler.Application.Services
             {
                 item.ActualEndTime = actualEndTime;
             }
-            if (actualQuantity.HasValue) item.ActualQuantity = actualQuantity.Value;
+            if (actualQuantity.HasValue)
+                item.ActualQuantity = actualQuantity.Value;
+            else
+                item.ActualQuantity = item.PlannedQuantity;
+            
             if (!string.IsNullOrEmpty(notes)) item.Notes = notes;
 
             // Recalculate schedule if item was completed or cancelled
