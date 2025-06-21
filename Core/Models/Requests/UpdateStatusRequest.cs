@@ -4,7 +4,7 @@ namespace ManufacturingScheduler.Core.Models.Requests
 {
     public class UpdateStatusRequest
     {
-        public int ScheduleId { get; set; }
+        public int? ScheduleId { get; set; }
         public int? ItemId { get; set; }
         public ScheduleItemStatus Status { get; set; }
         public DateTime? ActualStartTime { get; set; }
