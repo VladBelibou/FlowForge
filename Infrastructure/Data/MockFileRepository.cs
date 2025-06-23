@@ -6,9 +6,18 @@ namespace ManufacturingScheduler.Infrastructure.Data
     {
         private readonly string _filePath;
 
+        public static string GetProjectRoot()
+        {
+            var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+            while (directory != null && !directory.GetFiles("*.csproj*).Any())
+            {
+                directory = directory.Parent;
+            }
+            return directory?.FullName ?? Directory.GetCurrentDirectory();
+        
         public MockFileRepository(string fileName)
         {
-            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "MockData", fileName);
+            _filePath = Path.Combine(GetProjectRoot(), "MockData", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
 
             Console.WriteLine($"DEBUG: Looking for file at: {_filePath}");
