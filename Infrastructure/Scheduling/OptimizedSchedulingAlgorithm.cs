@@ -38,10 +38,10 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
             Console.WriteLine("DEBUG SCHEDULING: Verfügbare Maschinen:");
             foreach (var machine in machines)
             {
-                Console.WriteLine($"  Maschine {machine.Id} - {machine.Name} - Betriebsbereit: {machine.IsOperational}");
+                Console.WriteLine($"Maschine {machine.Id} - {machine.Name} - Betriebsbereit: {machine.IsOperational}");
                 foreach (var capability in machine.ProductCapabilities)
                 {
-                    Console.WriteLine($"    Can make: '{capability.ProductName}' (Setup: {capability.SetupTimeMinutes}min, Rate: {capability.ProductionRatePerHour}/Std)");
+                    Console.WriteLine($"Kann folgendes produzieren: '{capability.ProductName}' (Setup: {capability.SetupTimeMinutes}min, Rate: {capability.ProductionRatePerHour}/Std)");
                 }
             }
 
@@ -53,14 +53,14 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
             Console.WriteLine("DEBUG SCHEDULING: Bestellungen werden verarbeitet:");
             foreach (var order in sortedOrders)
             {
-                Console.WriteLine($"  Bestellung {order.Id} - '{order.ProductName}' - Menge: {order.Quantity} - Priorität: {order.CustomerPriority}");
+                Console.WriteLine($"Bestellung {order.Id} - '{order.ProductName}' - Menge: {order.Quantity} - Priorität: {order.CustomerPriority}");
             }
 
             var currentTime = actualStartTime; // Use immediate start time
 
             foreach (var order in sortedOrders)
             {
-                Console.WriteLine($"\nDEBUG SCHEDULING: Bestellung wird verarbeitet: {order.Id} - '{order.ProductName}'");
+                Console.WriteLine($"DEBUG SCHEDULING: Bestellung wird verarbeitet: {order.Id} - '{order.ProductName}'");
 
                 // Passende Maschine finden
                 var suitableMachine = machines.FirstOrDefault(m =>
@@ -75,7 +75,7 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                     var capability = suitableMachine.ProductCapabilities
                         .First(pc => string.Equals(pc.ProductName, order.ProductName, StringComparison.OrdinalIgnoreCase));
 
-                    Console.WriteLine($"DEBUG SCHEDULING: Verwende Kapazität - Setup: {capability.SetupTimeMinutes}min, Rate: {capability.ProductionRatePerHour}/hr");
+                    Console.WriteLine($"DEBUG SCHEDULING: Verwende Höchstkapazität - Setup: {capability.SetupTimeMinutes}min, Rate: {capability.ProductionRatePerHour}/hr");
 
                     // Produktionszeit berechnen
                     var setupTime = TimeSpan.FromMinutes(capability.SetupTimeMinutes);
@@ -109,7 +109,7 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                 }
             }
 
-            Console.WriteLine($"DEBUG SCHEDULING: Fianler Zeitplan hat {schedule.ScheduleItems.Count} Elemente");
+            Console.WriteLine($"DEBUG SCHEDULING: Finaler Zeitplan hat {schedule.ScheduleItems.Count} Elemente");
 
             // Set explanation with actual timeline
             if (schedule.ScheduleItems.Any())
