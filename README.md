@@ -73,6 +73,12 @@ sudo apt update &&
 sudo apt install -y dotnet-sdk-8.0
 ```
 
+### Andere Abhängigkeiten
+```bash
+sudo apt install git &&
+sudo apt install curl
+```
+
 ### 2. Für JSON-Formatierung jq installieren (optional aber empfohlen):
 ```bash
 sudo apt install jq
