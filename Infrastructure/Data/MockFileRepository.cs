@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Linq;
 
 namespace ManufacturingScheduler.Infrastructure.Data
 {
@@ -6,15 +7,16 @@ namespace ManufacturingScheduler.Infrastructure.Data
     {
         private readonly string _filePath;
 
-        public static string GetProjectRoot()
+        private static string GetProjectRoot()
         {
             var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
-            while (directory != null && !directory.GetFiles("*.csproj*).Any())
+            while (directory != null && !directory.GetFiles("*.csproj").Any())
             {
                 directory = directory.Parent;
             }
             return directory?.FullName ?? Directory.GetCurrentDirectory();
-        
+        }
+                                                            
         public MockFileRepository(string fileName)
         {
             _filePath = Path.Combine(GetProjectRoot(), "MockData", fileName);
