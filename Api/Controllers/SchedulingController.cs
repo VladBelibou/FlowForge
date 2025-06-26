@@ -11,8 +11,8 @@ namespace ManufacturingScheduler.Api.Controllers
     {
         private readonly SchedulingService _schedulingService;
 
-        public SchedulingController(SchedulingService schedulingService) =>
-            _schedulingService = schedulingService;
+        public SchedulingController(SchedulingService schedulingService) => _schedulingService = schedulingService;
+
 
         [HttpPost("create")]
         public async Task<ActionResult<ProductionSchedule>> CreateSchedule([FromBody] CreateScheduleRequest request)
@@ -22,6 +22,7 @@ namespace ManufacturingScheduler.Api.Controllers
             var schedule = await _schedulingService.CreateOptimizedScheduleAsync(startDate, request.SchedulerName);
             return Ok(schedule);
         }
+
 
         [HttpPost("status")]
         public async Task<ActionResult<object>> GetStatus([FromBody] GetStatusRequest request)
@@ -38,6 +39,7 @@ namespace ManufacturingScheduler.Api.Controllers
 
             return Ok(schedule);
         }
+
 
         [HttpPut("status")]
         public async Task<ActionResult<ProductionSchedule>> UpdateStatus([FromBody] UpdateStatusRequest request)
@@ -68,12 +70,14 @@ namespace ManufacturingScheduler.Api.Controllers
             return Ok(schedule);
         }
 
+
         [HttpDelete("{scheduleId}")]
         public async Task<ActionResult> DeleteSchedule(int scheduleId)
         {
             await _schedulingService.DeleteScheduleAsync(scheduleId);
             return NoContent();
         }
+
 
         [HttpPost("optimize")]
         public async Task<ActionResult<ProductionSchedule>> OptimizeSchedule([FromBody] OptimizeRequest request)
@@ -94,6 +98,7 @@ namespace ManufacturingScheduler.Api.Controllers
             return BadRequest("Ungültige Eingabe.");
         }
 
+
         [HttpGet("insights")]
         public async Task<ActionResult<string>> GetInsights(int? scheduleId = null)
         {
@@ -104,6 +109,7 @@ namespace ManufacturingScheduler.Api.Controllers
             var insights = await _schedulingService.GetScheduleInsightsAsync(schedule);
             return Ok(insights);
         }
+
 
         [HttpPost("insights")]
         public async Task<ActionResult<string>> GetCustomInsights([FromBody] ProductionSchedule customSchedule)
