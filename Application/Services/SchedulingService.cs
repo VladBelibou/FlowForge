@@ -84,11 +84,11 @@ public class SchedulingService
         item.ActualStartTime = actualStartTime ?? (status == ScheduleItemStatus.InProgress ? DateTime.Now : item.ActualStartTime);
         item.ActualEndTime = actualEndTime ?? (status == ScheduleItemStatus.Completed ? DateTime.Now : item.ActualEndTime);
         item.ActualQuantity = actualQuantity ?? item.PlannedQuantity;
-        if (!string.IsNullorWhiteSpace(notes)) item.Notes = notes;
+        if (!string.IsNullOrWhiteSpace(notes)) item.Notes = notes;
 
         if (status is ScheduleItemStatus.Completed or ScheduleItemStatus.Cancelled or ScheduleItemStatus.InProgress or ScheduleItemStatus.Delayed)
         {
-            var explanationPrompt = await RecalculatedWithExplanation(schedule, itemId, $"Status wurde zu {status} geändert");
+            var explanationPrompt = await RecalculateWithExplanation(schedule, itemId, $"Status wurde zu {status} geändert");
             schedule.Explanation = await _chatGptService.GenerateExplanationAsync(explanationPrompt);
         }
 
@@ -206,6 +206,7 @@ public class SchedulingService
     private void LogScheduleItemChange(string action, ScheduleItem item)
     {
         Console.WriteLine($"DEBUG: {action} Artikel {item.Id} — Endzeit: {item.ActualEndTime}, Menge: {item.ActualQuantity}, Status: {item.Status}");
+    }
     
     private ProductionSchedule ApplySchedulingChanges(ProductionSchedule schedule, SchedulingInterpretation interpretation)
         {
@@ -229,7 +230,7 @@ public class SchedulingService
 
                 if (change.NewStatus.HasValue)
                 {
-                    item.Status = change.NewStatus.Value
+                    item.Status = change.NewStatus.Value;
                     if (!item.ActualStartTime.HasValue && item.Status == ScheduleItemStatus.InProgress)
                         item.ActualStartTime = DateTime.Now;
                     if (!item.ActualEndTime.HasValue && item.Status == ScheduleItemStatus.Completed)
