@@ -47,24 +47,13 @@ namespace ManufacturingScheduler.Api.Controllers
             if (!request.ItemId.HasValue)
                 return BadRequest("ItemId wird benötigt");
 
-                var schedule = request.Status == ScheduleItemStatus.Completed
-                    ? await _schedulingService.CompleteScheduleItemAsync(
-                        request.ScheduleId,
-                        request.ItemId.Value,
-                        request.ActualQuantity,
-                        /* Add ActualStartTime and let it become nullable 
-                        just like the method below, to avoid TimeSaved calculations
-                        from coming up wrong.                               
-                        */
-                        request.ActualEndTime ?? DateTime.Now,
-                        request.Notes)
-                    : await _schedulingService.UpdateScheduleItemStatusAsync(
+                var schedule = await _schedulingService.UpdateScheduleItemStatusAsync(
                         request.ScheduleId,
                         request.ItemId.Value,
                         request.Status,
                         request.ActualQuantity,
                         request.ActualStartTime,
-                        request.ActualEndTime,
+                        request.ActualEndTime ?? (request.Status == ScheduleItemStatus.Completed ? DateTime.Now : null),
                         request.Notes);
                         
             return Ok(schedule);
