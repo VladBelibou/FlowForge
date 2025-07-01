@@ -42,32 +42,6 @@ public class SchedulingService
     }
 
     
-    public async Task<ProductionSchedule> CompleteScheduleItemAsync(
-        int? scheduleId,
-        int itemId,
-        DateTime? completionTime,
-        int? actualQuantity,
-        string? notes = null)
-    {
-        var schedule = await ResolveSchedule(scheduleId);
-        var item = FindScheduleItem(schedule, itemId);
-
-        item.Status = ScheduleItemStatus.Completed;
-        item.ActualEndTime = completionTime ?? DateTime.Now;
-        item.ActualQuantity = actualQuantity ?? item.PlannedQuantity;
-        item.Notes = notes;
-
-        LogScheduleItemChange("Fertig", item);
-
-        var explanationPrompt = await RecalculateWithExplanation(schedule, itemId, "abgeschlossen");
-        schedule.Explanation = await _chatGptService.GenerateExplanationAsync(explanationPrompt);
-
-        await _scheduleRepository.SaveScheduleAsync(schedule);
-        return schedule;
-    }
-
-    
-        
     public async Task<ProductionSchedule> UpdateScheduleItemStatusAsync(
         int? scheduleId,
         int itemId,
