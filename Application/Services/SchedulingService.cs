@@ -179,7 +179,7 @@ public class SchedulingService
                $"Item's original end date was {originalItemEnd:MM/dd HH:mm}, " +
                $"actual completion was {actualItemEnd:MM/dd HH:mm}. " +
                $"Time saved on this tiem: {itemTimeSaved.TotalHours:F1} hours. " +
-               %"Overall schedule impact: {scheduleTimeDiff.TotalHours:F1} hours. " +
+               $"Overall schedule impact: {scheduleTimeDiff.TotalHours:F1} hours. " +
                $"Write a brief German explanation of this change and its impact.";
     }
 
