@@ -162,7 +162,7 @@ public class SchedulingService
             : await GetCurrentScheduleAsync();
 
     
-    private string RecalculateWithExplanation(ProductionSchedule schedule, int itemId, string actionLabel)
+    private async Task<string> RecalculateWithExplanation(ProductionSchedule schedule, int itemId, string actionLabel)
     {
         var changedItem = FindScheduleItem(schedule, itemId);
         var originalItemEnd = changedItem.EndTime;
