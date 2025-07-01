@@ -45,8 +45,8 @@ public class SchedulingService
     public async Task<ProductionSchedule> CompleteScheduleItemAsync(
         int? scheduleId,
         int itemId,
-        int? actualQuantity,
         DateTime? completionTime,
+        int? actualQuantity,
         string? notes = null)
     {
         var schedule = await ResolveSchedule(scheduleId);
@@ -57,7 +57,7 @@ public class SchedulingService
         item.ActualQuantity = actualQuantity ?? item.PlannedQuantity;
         item.Notes = notes;
 
-        LogScheduleItemChnage("Fertig", item);
+        LogScheduleItemChange("Fertig", item);
 
         var explanationPrompt = await RecalculateWithExplanation(schedule, itemId, "abgeschlossen");
         schedule.Explanation = await _chatGptService.GenerateExplanationAsync(explanationPrompt);
