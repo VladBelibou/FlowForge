@@ -164,15 +164,22 @@ public class SchedulingService
     
     private async Task<string> RecalculateWithExplanation(ProductionSchedule schedule, int itemId, string actionLabel)
     {
-        var originalEnd = schedule.EstimatedEndDate;
+        var changedItem = FindScheduleItem(schedule, itemId);
+        var originalItemEnd = changedItem.EndTime;
+        var actualItemEnd = changedItem.ActualEndTime;
+        
+        var originalScheduleEnd = schedule.EstimatedEndDate;
         schedule.RecalculateSchedule();
-        var newEnd = schedule.EstimatedEndDate;
-        var diff = originalEnd - newEnd;
+        var newScheduleEnd = schedule.EstimatedEndDate;
+        
+        var scheduleTimeDiff = originalScheduleEnd - newScheduleEnd;
+        var itemTimeSaved = actualItemEnd.HasValue ? originalItemEnd - actualItemEnd.Value : TimeSpan.Zero;
 
         return $"A schedule item (ID: {itemId}) was {actionLabel}. " +
-               $"Original end date was {originalEnd:MM/dd HH:mm}, " +
-               $"new end date is {newEnd:MM/dd HH:mm}. " +
-               $"Time difference: {diff.TotalHours:F1} hours. " +
+               $"Item's original end date was {originalItemEnd:MM/dd HH:mm}, " +
+               $"actual completion was {actualItemEnd:MM/dd HH:mm}. " +
+               $"Time saved on this tiem: {itemTimeSaved.TotalHours:F1} hours. " +
+               %"Overall schedule impact: {scheduleTimeDiff.TotalHours:F1} hours. " +
                $"Write a brief German explanation of this change and its impact.";
     }
 
