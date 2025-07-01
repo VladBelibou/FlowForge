@@ -51,9 +51,9 @@ namespace ManufacturingScheduler.Api.Controllers
                         request.ScheduleId,
                         request.ItemId.Value,
                         request.Status,
-                        request.ActualQuantity,
                         request.ActualStartTime,
                         request.ActualEndTime ?? (request.Status == ScheduleItemStatus.Completed ? DateTime.Now : null),
+                        request.ActualQuantity,
                         request.Notes);
                         
             return Ok(schedule);
