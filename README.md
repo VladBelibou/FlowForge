@@ -73,38 +73,26 @@ sudo apt update &&
 sudo apt install -y dotnet-sdk-8.0
 ```
 
-### Andere Abhängigkeiten
-### 2. Für JSON-Formatierung jq installieren (optional aber empfohlen):
+### 2. Andere Abhängigkeiten
 ```bash
 sudo apt install git &&
 sudo apt install curl
 sudo apt install jq
-```
-
-### 2. Für JSON-Formatierung jq installieren (optional aber empfohlen):
-### 3. Andere Abhängigkeiten
-```bash
-sudo apt install jq
-sudo apt install git &&
-sudo apt install curl
 ```
 
 ### 3. Repository klonen:
-### 4. Repository klonen:
 ```bash
 git clone https://github.com/VladBelibou/FlowForge.git
 cd FlowForge
 ```
 
 ### 4. API-Einstellungen konfigurieren
-### 5. API-Einstellungen konfigurieren
 ```bash
 # appsettings.json bearbeiten und OpenAI API-Schlüssel hinzufügen
 nano appsettings.json
 ```
 
 ### 5. Anwendung starten:
-### 6. Anwendung starten:
 ```bash
 dotnet run
 ```
