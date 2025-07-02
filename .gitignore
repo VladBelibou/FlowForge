@@ -52,3 +52,11 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Custom Ignore
+README.md
+appsettings.json
+demo/
+images/
+.vs/
+MockData/schedules.txt
