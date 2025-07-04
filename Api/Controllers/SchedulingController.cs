@@ -47,15 +47,15 @@ namespace ManufacturingScheduler.Api.Controllers
             if (!request.ItemId.HasValue)
                 return BadRequest("ItemId wird benötigt");
 
-                var schedule = await _schedulingService.UpdateScheduleItemStatusAsync(
-                        request.ScheduleId,
-                        request.ItemId.Value,
-                        request.Status,
-                        request.ActualStartTime,
-                        request.ActualEndTime ?? (request.Status == ScheduleItemStatus.Completed ? DateTime.Now : null),
-                        request.ActualQuantity,
-                        request.Notes);
-                        
+            var schedule = await _schedulingService.UpdateScheduleItemStatusAsync(
+                    request.ScheduleId,
+                    request.ItemId.Value,
+                    request.Status,
+                    request.ActualStartTime,
+                    request.ActualEndTime ?? (request.Status == ScheduleItemStatus.Completed ? DateTime.Now : null),
+                    request.ActualQuantity,
+                    request.Notes);
+
             return Ok(schedule);
         }
 
@@ -77,13 +77,13 @@ namespace ManufacturingScheduler.Api.Controllers
                 var updatedSchedule = await _schedulingService.ProcessNaturalLanguageRequestAsync(request.NaturalLanguageRequest, currentSchedule);
                 return Ok(updatedSchedule);
             }
-            
+
             if (request.ScheduleId.HasValue && request.StartNow)
             {
                 var updatedSchedule = await _schedulingService.RescheduleToStartNowAsync(request.ScheduleId.Value);
                 return Ok(updatedSchedule);
             }
-            
+
             return BadRequest("Ungültige Eingabe.");
         }
 
@@ -107,5 +107,87 @@ namespace ManufacturingScheduler.Api.Controllers
             return Ok(insights);
         }
 
+
+        [HttpPost("batch-delete")]
+        public async Task<ActionResult<BatchDeleteResponse>> BatchDeleteSchedules([FromBody] BatchDeleteScheduleRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState
+                    .Where(kvp => kvp.Value?.Errors.Count > 0)
+                    .Select(kvp => new ModelStateError 
+                    {
+                        Field = kvp.Key,
+                        Errors = kvp.Value!.Errors.Select(e => e.ErrorMessage).ToList()
+                    })
+                    .ToList();
+
+                Console.WriteLine("ModelState Errors:");
+                foreach (var error in errors)
+                {
+                    Console.WriteLine($"Field: {error.Field}");
+                    foreach (var msg in error.Errors)
+                        Console.WriteLine($"  Error: {msg}");
+                }
+                return BadRequest(ModelState);
+            }
+
+            if ((request.ScheduleIds?.Any() != true) && !request.LastCount.HasValue)
+            {
+                Console.WriteLine("Validation: Neither ScheduleIds nor LastCount provided.");
+                return BadRequest("Either ScheduleIds or LastCount must be provided");
+            }
+
+            var response = await _schedulingService.BatchDeleteSchedulesAsync(request);
+
+            if (response.Errors.Any())
+            {
+                Console.WriteLine("BatchDelete response erorrs:");
+                foreach (var err in response.Errors)
+                    Console.WriteLine(err);
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpPost("batch-delete/preview")]
+        public async Task<ActionResult<object>> PreviewBatchDelete([FromBody] BatchDeleteScheduleRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if ((request.ScheduleIds?.Any() != true) && !request.LastCount.HasValue)
+            {
+                return BadRequest("Either ScheduleIds or LastCount must be provided");
+            }
+
+            var schedulesToDelete = await _schedulingService.GetSchedulePreviewForDeletionAsync(request);
+
+            return Ok(new
+            {
+                SchedulesToDelete = schedulesToDelete.Select(s => new
+                {
+                    s.Id,
+                    s.CreatedDate,
+                    s.CreatedBy,
+                    ItemCount = s.ScheduleItems.Count,
+                    Status = s.CompletionPercentage > 0 ? "In Progress" : "Planned"
+                }).ToList(),
+                TotalCount = schedulesToDelete.Count,
+                Message = $"Preview: {schedulesToDelete.Count} schedule(s) will be deleted"
+            });
+        }
+
+
+        [HttpGet("all")]
+        public async Task<ActionResult<List<ProductionSchedule>>> GetAllSchedules()
+        {
+            var schedules = await _schedulingService.GetAllSchedulesAsync();
+            return Ok(schedules);
+        }
     }
 }

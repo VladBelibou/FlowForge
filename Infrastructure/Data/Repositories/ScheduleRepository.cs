@@ -34,5 +34,43 @@ namespace ManufacturingScheduler.Infrastructure.Data.Repositories
         {
             await _mockRepository.DeleteItemAsync(scheduleId);
         }
+
+        public async Task<List<ProductionSchedule>> GetAllSchedulesAsync()
+        {
+            return await _mockRepository.GetAllAsync();
+        }
+
+        public async Task<int> BatchDeleteSchedulesAsync(List<int> scheduleIds)
+        {
+            var allSchedules = await _mockRepository.GetAllAsync();
+            var initialCount = allSchedules.Count;
+
+            var schedulesToKeep = allSchedules.Where(s => !scheduleIds.Contains(s.Id)).ToList();
+            await _mockRepository.SaveAsync(schedulesToKeep);
+
+            return initialCount - schedulesToKeep.Count;
+        }
+
+        public async Task<List<ProductionSchedule>> GetLastNSchedulesAsync(int count, string? createdByFilter = null, DateTime? createdBeforeDate = null)
+        {
+            var allSchedules = await _mockRepository.GetAllAsync();
+
+            var filteredSchedules = allSchedules.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(createdByFilter))
+            {
+                filteredSchedules = filteredSchedules.Where(s => s.CreatedBy.Contains(createdByFilter, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (createdBeforeDate.HasValue)
+            {
+                filteredSchedules = filteredSchedules.Where(s => s.CreatedDate < createdBeforeDate.Value);
+            }
+
+            return filteredSchedules
+                .OrderByDescending(s => s.CreatedDate)
+                .Take(count)
+                .ToList();
+        }
     }
 }

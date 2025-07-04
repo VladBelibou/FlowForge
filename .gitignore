@@ -60,3 +60,4 @@ demo/
 images/
 .vs/
 MockData/schedules.txt
+/appsettings.json
