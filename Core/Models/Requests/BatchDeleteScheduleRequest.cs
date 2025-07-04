@@ -4,9 +4,6 @@ namespace ManufacturingScheduler.Core.Models.Requests
 {
     public class BatchDeleteScheduleRequest
     {
-        /// <summary>
-        /// Specific schedule IDs to delete
-        /// </summary>
         public List<int>? ScheduleIds { get; set; }
 
         /// <summary>
