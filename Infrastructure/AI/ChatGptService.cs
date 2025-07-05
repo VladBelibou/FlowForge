@@ -50,7 +50,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
             try
             {
                 var prompt = BuildAnalysisPrompt(schedule);
-                var analysis = await CallOpenAIAsync(prompt)
+                var analysis = await CallOpenAIAsync(prompt);
                 return AddColorToAnalysis(analysis);
             }
             catch (Exception ex)
@@ -63,7 +63,8 @@ namespace ManufacturingScheduler.Infrastructure.AI
           public async Task<string> GenerateExplanationAsync(string prompt)
           {
               try
-              
+              {
+
                   var requestBody = new
                   {
                       model = "gpt-3.5-turbo", 

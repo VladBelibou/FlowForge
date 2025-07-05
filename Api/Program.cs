@@ -49,7 +49,7 @@ namespace ManufacturingScheduler.Api
             // Register application services
             builder.Services.AddScoped<SchedulingService>();
 
-            var app = builder.Build()
+            var app = builder.Build();
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
