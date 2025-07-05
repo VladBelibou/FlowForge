@@ -31,7 +31,6 @@ namespace ManufacturingScheduler.Infrastructure.AI
                 var prompt = BuildSchedulingPrompt(request, currentSchedule);
                 var aiResponse = await CallOpenAIAsync(prompt); 
 
-                // AI-Antwort in strukturierte Daten umwandeln
                 return ParseAIResponseToInterpretation(aiResponse, request);
             }
             catch (Exception ex)
@@ -51,8 +50,7 @@ namespace ManufacturingScheduler.Infrastructure.AI
             try
             {
                 var prompt = BuildAnalysisPrompt(schedule);
-                var analysis = await CallOpenAIAsync(prompt);
-                // return analysis;
+                var analysis = await CallOpenAIAsync(prompt)
                 return AddColorToAnalysis(analysis);
             }
             catch (Exception ex)
@@ -65,18 +63,17 @@ namespace ManufacturingScheduler.Infrastructure.AI
           public async Task<string> GenerateExplanationAsync(string prompt)
           {
               try
-              {
-                  // Use a simpler, faster request for brief explanations
+              
                   var requestBody = new
                   {
-                      model = "gpt-3.5-turbo", // Use faster model for simple explanations
+                      model = "gpt-3.5-turbo", 
                       messages = new[]
                       {
                           new { role = "system", content = "Du bist ein Fertigungsplaner. Gib kurze, präzise deutsche Erklärungen zu Statusänderungen in Produktionsplänen." },
                           new { role = "user", content = prompt }
                       },
-                      max_tokens = 150, // Keep it short
-                      temperature = 0.3  // Lower temperature for more consistent responses
+                      max_tokens = 150, 
+                      temperature = 0.3  
                   };
 
                   var json = JsonSerializer.Serialize(requestBody);
@@ -93,7 +90,6 @@ namespace ManufacturingScheduler.Infrastructure.AI
                                              .GetProperty("content")
                                              .GetString() ?? "Keine Antwort erhalten";
 
-                  // Clean up the response - remove extra newlines and quotes
                   return explanation.Trim().Replace("\n", " ").Replace("\"", "");
               }
               catch (Exception ex)
@@ -117,7 +113,6 @@ namespace ManufacturingScheduler.Infrastructure.AI
             sb.AppendLine($"- Current Status: {schedule.CompletedItems} completed, {schedule.PendingItems} pending");
             sb.AppendLine();
 
-            // Elemente nach Status gruppieren für bessere Übersicht
             var completedItems = schedule.ScheduleItems.Where(i => i.Status == ScheduleItemStatus.Completed).ToList();
             var pendingItems = schedule.ScheduleItems.Where(i => i.Status == ScheduleItemStatus.Planned).ToList();
             var inProgressItems = schedule.ScheduleItems.Where(i => i.Status == ScheduleItemStatus.InProgress).ToList();
@@ -231,7 +226,6 @@ namespace ManufacturingScheduler.Infrastructure.AI
         {
             var requestBody = new
             {
-                // model = "gpt-3.5-turbo",
                 model = "gpt-4",
                 messages = new[]
                 {
@@ -287,13 +281,11 @@ namespace ManufacturingScheduler.Infrastructure.AI
             if (!element.TryGetProperty(propertyName, out var property))
                 return false;
 
-            // Handle numeric values
             if (property.ValueKind == JsonValueKind.Number)
             {
                 return property.TryGetInt32(out value);
             }
 
-            // Handle string values that might be numbers
             if (property.ValueKind == JsonValueKind.String)
             {
                 var stringValue = property.GetString();
@@ -310,15 +302,12 @@ namespace ManufacturingScheduler.Infrastructure.AI
         {
             var changes = new List<ScheduleChange>();
 
-            // Simple text parsing for common patterns
             var lines = aiResponse.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var line in lines)
             {
-                // Look for patterns like "Order 1" or "move order 2"
                 if (line.ToLower().Contains("order") && line.ToLower().Contains("machine"))
                 {
-                    // Extract order ID and machine ID using regex or simple parsing
                     var orderMatch = System.Text.RegularExpressions.Regex.Match(line, @"order\s+(\d+)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
                     var machineMatch = System.Text.RegularExpressions.Regex.Match(line, @"machine\s+(\d+)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
@@ -350,10 +339,8 @@ namespace ManufacturingScheduler.Infrastructure.AI
             const string BLUE = "\u001b[1;34m";
             const string CYAN = "\u001b[1;36m";
 
-            // Use regex for dynamic patterns
             analysis = Regex.Replace(analysis, @"\*\*(.*?)\*\*", $"{CYAN}{BOLD}**$1**{RESET}");
 
-            // Color percentages based on value
             analysis = Regex.Replace(analysis, @"(\d+(?:\.\d+)?)%", match =>
             {
                 var percentage = double.Parse(match.Groups[1].Value);
@@ -361,7 +348,6 @@ namespace ManufacturingScheduler.Infrastructure.AI
                 return $"{color}{match.Value}{RESET}";
             });
 
-            // Color fractions (like 0/5, 3/10)
             analysis = Regex.Replace(analysis, @"(\d+)/(\d+)", match =>
             {
                 var completed = int.Parse(match.Groups[1].Value);
@@ -370,28 +356,21 @@ namespace ManufacturingScheduler.Infrastructure.AI
                 return $"{color}{match.Value}{RESET}";
             });
 
-            // Color time durations - preserve original text exactly
             analysis = Regex.Replace(analysis, @"(\d+(?:\.\d+)?)\s+(days?|hours?|minutes?)", match =>
             {
                 return $"{YELLOW}{match.Value}{RESET}";
             });
 
-            // Color dates/times (6/6, 6/8, etc.)
             analysis = Regex.Replace(analysis, @"(\d{1,2}/\d{1,2}(?:\s+\d{2}:\d{2})?)", $"{CYAN}$1{RESET}");
 
-            // Color machine numbers
             analysis = Regex.Replace(analysis, @"Machine\s+(\d+)", $"Machine {BLUE}$1{RESET}");
 
-            // Color order numbers  
             analysis = Regex.Replace(analysis, @"Order\s+(\d+)", $"Order {BLUE}$1{RESET}");
 
-            // Color warning keywords
             analysis = Regex.Replace(analysis, @"\b(idle|delay|bottleneck|underutilized)\b", $"{RED}$1{RESET}", RegexOptions.IgnoreCase);
 
-            // Color positive keywords
             analysis = Regex.Replace(analysis, @"\b(completed|optimization|opportunity|efficient)\b", $"{GREEN}$1{RESET}", RegexOptions.IgnoreCase);
 
-            // Color section dividers
             analysis = analysis.Replace("---", $"{BLUE}---{RESET}");
 
             return analysis;

@@ -28,13 +28,11 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                 ScheduleItems = new List<ScheduleItem>()
             };
 
-            // DEBUG: Zeigt welches Startdatum angefordert wurde
             Console.WriteLine($"DEBUG SCHEDULING: Angefordertes Startdatum: {startDate:MM/dd HH:mm}");
 
-            var actualStartTime = DateTime.Now.AddMinutes(10); // Start in 10 minutes
+            var actualStartTime = DateTime.Now.AddMinutes(10); 
             Console.WriteLine($"DEBUG SCHEDULING: Verwende sofortige Startzeit: {actualStartTime:MM/dd HH:mm}");
 
-            // Debug-Maschinen
             Console.WriteLine("DEBUG SCHEDULING: Verfügbare Maschinen:");
             foreach (var machine in machines)
             {
@@ -45,7 +43,6 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                 }
             }
 
-            // Bestellungen nach Priorität (höhere zuerst) und Fälligkeitsdatum sortieren
             var sortedOrders = orders.OrderByDescending(o => o.CustomerPriority)
                                    .ThenBy(o => o.DueDate)
                                    .ToList();
@@ -56,13 +53,12 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                 Console.WriteLine($"Bestellung {order.Id} - '{order.ProductName}' - Menge: {order.Quantity} - Priorität: {order.CustomerPriority}");
             }
 
-            var currentTime = actualStartTime; // Use immediate start time
+            var currentTime = actualStartTime; 
 
             foreach (var order in sortedOrders)
             {
                 Console.WriteLine($"DEBUG SCHEDULING: Bestellung wird verarbeitet: {order.Id} - '{order.ProductName}'");
 
-                // Passende Maschine finden
                 var suitableMachine = machines.FirstOrDefault(m =>
                     m.IsOperational &&
                     m.ProductCapabilities.Any(pc =>
@@ -77,7 +73,6 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
 
                     Console.WriteLine($"DEBUG SCHEDULING: Verwende Höchstkapazität - Setup: {capability.SetupTimeMinutes}min, Rate: {capability.ProductionRatePerHour}/hr");
 
-                    // Produktionszeit berechnen
                     var setupTime = TimeSpan.FromMinutes(capability.SetupTimeMinutes);
                     var productionHours = (double)order.Quantity / capability.ProductionRatePerHour;
                     var productionTime = TimeSpan.FromHours(productionHours);
@@ -100,7 +95,7 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
                     schedule.ScheduleItems.Add(scheduleItem);
                     Console.WriteLine($"DEBUG SCHEDULING: Zeitplan-Element {scheduleItem.Id} hinzugefügt");
 
-                    currentTime = endTime.AddMinutes(10); // Buffer time between jobs
+                    currentTime = endTime.AddMinutes(10);
                     Console.WriteLine($"DEBUG SCHEDULING: Nächste verfügbare Zeit: {currentTime:MM/dd HH:mm}");
                 }
                 else
@@ -111,7 +106,6 @@ namespace ManufacturingScheduler.Infrastructure.Scheduling
 
             Console.WriteLine($"DEBUG SCHEDULING: Finaler Zeitplan hat {schedule.ScheduleItems.Count} Elemente");
 
-            // Set explanation with actual timeline
             if (schedule.ScheduleItems.Any())
             {
                 var lastEndTime = schedule.ScheduleItems.Max(item => item.EndTime);
