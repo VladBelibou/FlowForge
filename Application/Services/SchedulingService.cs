@@ -134,27 +134,6 @@ public class SchedulingService
         _chatGptService.AnalyzeScheduleAsync(schedule);
 
 
-    public async Task<ProductionSchedule> RescheduleToStartNowAsync(int scheduleId)
-    {
-        var schedule = await GetScheduleByIdAsync(scheduleId);
-        var earliestStart = schedule.ScheduleItems.Min(i => i.StartTime);
-        var newStart = DateTime.Now.AddMinutes(30);
-        var shift = newStart - earliestStart;
-
-        foreach (var item in schedule.ScheduleItems)
-        {
-            item.StartTime += shift;
-            item.EndTime += shift;
-        }
-
-        schedule.Explanation = $"Zeitplan wurde umgeplant um am {newStart:MM/dd HH:mm} zu starten. Bereit für die Produktion!";
-        schedule.CreatedBy += " (Neu geplant)";
-
-        await _scheduleRepository.SaveScheduleAsync(schedule);
-        return schedule;
-    }
-
-
     private static ScheduleItem FindScheduleItem(ProductionSchedule schedule, int itemId) =>
         schedule.ScheduleItems.FirstOrDefault(i => i.Id == itemId)
         ?? throw new ArgumentException($"Zeitplan-Element {itemId} nicht gefunden");

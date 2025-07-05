@@ -78,12 +78,6 @@ namespace ManufacturingScheduler.Api.Controllers
                 return Ok(updatedSchedule);
             }
 
-            if (request.ScheduleId.HasValue && request.StartNow)
-            {
-                var updatedSchedule = await _schedulingService.RescheduleToStartNowAsync(request.ScheduleId.Value);
-                return Ok(updatedSchedule);
-            }
-
             return BadRequest("Ungültige Eingabe.");
         }
 
