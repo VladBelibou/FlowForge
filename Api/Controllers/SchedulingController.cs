@@ -181,7 +181,19 @@ namespace ManufacturingScheduler.Api.Controllers
         public async Task<ActionResult<List<ProductionSchedule>>> GetAllSchedules()
         {
             var schedules = await _schedulingService.GetAllSchedulesAsync();
-            return Ok(schedules);
+
+            return Ok(new
+            {
+                AllSchedules = schedules.Select(s => new
+                {
+                    s.Id,
+                    s.CreatedDate,
+                    s.CreatedBy,
+                    ItemCount = s.ScheduleItems.Count,
+                    Status = s.CompletionPercentage > 0 ? "In Progress" : "Planned"
+                }).ToList(),
+                TotalCount = schedules.Count,
+            });
         }
     }
 }
