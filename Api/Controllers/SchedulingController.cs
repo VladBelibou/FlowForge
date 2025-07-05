@@ -116,27 +116,27 @@ namespace ManufacturingScheduler.Api.Controllers
                     })
                     .ToList();
 
-                Console.WriteLine("ModelState Errors:");
+                Console.WriteLine("ModelState Fehlern:");
                 foreach (var error in errors)
                 {
-                    Console.WriteLine($"Field: {error.Field}");
+                    Console.WriteLine($"Feld: {error.Field}");
                     foreach (var msg in error.Errors)
-                        Console.WriteLine($"  Error: {msg}");
+                        Console.WriteLine($"  Fehler: {msg}");
                 }
                 return BadRequest(ModelState);
             }
 
             if ((request.ScheduleIds?.Any() != true) && !request.LastCount.HasValue)
             {
-                Console.WriteLine("Validation: Neither ScheduleIds nor LastCount provided.");
-                return BadRequest("Either ScheduleIds or LastCount must be provided");
+                Console.WriteLine("Validierung: Weder ScheduleIds noch LastCount wurden gegeben.");
+                return BadRequest("Entweder ScheduleIds oder LastCount muss eingegeben werden");
             }
 
             var response = await _schedulingService.BatchDeleteSchedulesAsync(request);
 
             if (response.Errors.Any())
             {
-                Console.WriteLine("BatchDelete response erorrs:");
+                Console.WriteLine("BatchDelete Anwortfehler:");
                 foreach (var err in response.Errors)
                     Console.WriteLine(err);
                 return BadRequest(response);
@@ -156,7 +156,7 @@ namespace ManufacturingScheduler.Api.Controllers
 
             if ((request.ScheduleIds?.Any() != true) && !request.LastCount.HasValue)
             {
-                return BadRequest("Either ScheduleIds or LastCount must be provided");
+                return BadRequest("Entweder ScheduleIds oder LastCount wurden eingegeben");
             }
 
             var schedulesToDelete = await _schedulingService.GetSchedulePreviewForDeletionAsync(request);
@@ -172,7 +172,7 @@ namespace ManufacturingScheduler.Api.Controllers
                     Status = s.CompletionPercentage > 0 ? "In Progress" : "Planned"
                 }).ToList(),
                 TotalCount = schedulesToDelete.Count,
-                Message = $"Preview: {schedulesToDelete.Count} schedule(s) will be deleted"
+                Message = $"Vorschau: Folgende Menge an Zeitplänen werden gelöscht: {schedulesToDelete.Count}"
             });
         }
 
