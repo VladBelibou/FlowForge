@@ -22,10 +22,6 @@ namespace ManufacturingScheduler.Api
             // Services zum Container hinzufügen
             builder.Services.AddControllers();
 
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-
             // Datenbankkontext (optional - verwenden derzeit dateibasierte Repositories)
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? ""));
@@ -53,14 +49,7 @@ namespace ManufacturingScheduler.Api
             // Register application services
             builder.Services.AddScoped<SchedulingService>();
 
-            var app = builder.Build();
-
-            // HTTP-Request-Pipeline konfigurieren
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            var app = builder.Build()
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
